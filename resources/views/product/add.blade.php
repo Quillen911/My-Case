@@ -11,7 +11,12 @@
     <form action="{{route('product.addpost')}}" method="POST" >
         @csrf
         <input type="text" name="productTitle" placeholder='Ürün Adı' required ><br>
-        <input type="text" name="productCategoryId" placeholder='Ürün Kategori Numarası' required ><br>
+        <select name="productCategoryId">
+            <option value="">Kategori Seçiniz</option>
+            @foreach($categories as $c)
+                <option value="{{$c->id}}">{{$c->categoryTitle}}</option>
+            @endforeach
+        </select><br>
         <input type="text" name="productBarcode" placeholder='Ürün Barkod' required ><br>
         <input type="text" name="productStatus" placeholder='Ürün Durumu' required ><br>
         <button type='submit'>Ekle</button>

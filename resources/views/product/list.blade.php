@@ -12,7 +12,8 @@
             <tr>
                 <th>Ürün ID</th>
                 <th>Ürün Adı</th>
-                <th>Ürün Numarası</th>
+                <th>Ürün Kategori Numarası</th>
+                <th>Ürün Kategorisi</th>
                 <th>Ürün Barkodu</th>
                 <th>Ürün Açıklaması</th>
                 <th>               </th>
@@ -25,6 +26,13 @@
                     <td> {{ $p->id }} </td>
                     <td> {{ $p->productTitle }} </td>
                     <td> {{ $p->productCategoryId }} </td>
+                    <td>
+                        @foreach($categories as $c)
+                            @if($c->id == $p->productCategoryId)
+                                {{ $c->categoryTitle }}
+                            @endif    
+                        @endforeach
+                    </td>
                     <td> {{ $p->productBarcode }} </td>
                     <td> {{ $p->productStatus }} </td>
                     <td> <a href="{{ route('editProduct', $p->id) }} ">Düzenle</a> </td>

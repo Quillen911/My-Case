@@ -54,7 +54,7 @@ class AuthController extends Controller{
             return redirect()->route('main'); //doğruysa giriş
         }
         return back()->withErrors([
-            'email' => 'Email or Passwords Incorrect', //yanlış
+            'email' => 'Email veya şifre yanlış', //yanlış
         ]);
     }
     public function logout(){
@@ -148,7 +148,8 @@ class AuthController extends Controller{
     //PRODUCT
 
     public function add(){
-        return view('product.add');
+        $categories= Category::all();
+        return view('product.add', compact('categories'));
     }
     public function addpost(Request $request){
 
@@ -158,7 +159,7 @@ class AuthController extends Controller{
             'productBarcode' => 'required|unique:product,productBarcode',
             'productStatus' => 'required',
         ],[
-            'productBarcode.unique' => 'Bu kategori barkodu bulunmakta.'
+            'productBarcode.unique' => 'Bu barkod zaten kullanılıyor.'
 
         ]);
 
@@ -189,7 +190,7 @@ class AuthController extends Controller{
             'productBarcode' => 'required|unique:product,productBarcode,' .$product->id,
             'productStatus' => 'required'
         ],[
-            'productBarcode.unique' => 'Bu kategori barkodu bulunmakta.'
+            'productBarcode.unique' => 'Bu barkod zaten kullanılıyor.'
         ]);
 
         $product ->productTitle = $request->productTitle;
@@ -201,8 +202,9 @@ class AuthController extends Controller{
         return redirect()->route('list');
     }
     public function productListDeleted(){
+        $categories = Category::all();
         $product= \App\Models\Product::onlyTrashed()->get();
-        return view('product.productListDeleted', compact('product'));
+        return view('product.productListDeleted', compact('product','categories'));
     }
 
 }

@@ -50,7 +50,8 @@ Route::post('/product/addpost',[AuthController::class,'addpost'])->name('product
 
 Route::get('/product/list',function (){
     $product = Product::all();
-    return view('product.list', compact('product'));
+    $categories = Category::all();
+    return view('product.list', compact('product', 'categories'));
 })->middleware('auth')->name('list');
 
 Route::delete('/product/{id}', [AuthController::class, 'deleteProduct'])->name('deleteProduct')->middleware('auth');
