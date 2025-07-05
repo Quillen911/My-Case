@@ -154,11 +154,10 @@ class AuthController extends Controller{
 
         $request->validate([
             'productTitle' => 'required',
-            'productCategoryId' => 'required|unique:product,productCategoryId',
+            'productCategoryId' => 'nullable',
             'productBarcode' => 'required|unique:product,productBarcode',
             'productStatus' => 'required',
         ],[
-            'productCategoryId.unique' => 'Bu kategori numarası zaten kullanılıyor.',
             'productBarcode.unique' => 'Bu kategori barkodu bulunmakta.'
 
         ]);
@@ -169,7 +168,7 @@ class AuthController extends Controller{
             'productBarcode' => $request->productBarcode, 
             'productStatus' => $request->productStatus, 
         ]);
-        return redirect()->route('add');
+        return redirect()->route('product.add');
 
     }
     public function deleteProduct($id){

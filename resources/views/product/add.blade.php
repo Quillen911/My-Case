@@ -8,7 +8,7 @@
 <body>
     <h1>Ürün Ekle</h1>
 
-    <form action="{{route('addpost')}}" method="POST" >
+    <form action="{{route('product.addpost')}}" method="POST" >
         @csrf
         <input type="text" name="productTitle" placeholder='Ürün Adı' required ><br>
         <input type="text" name="productCategoryId" placeholder='Ürün Kategori Numarası' required ><br>
