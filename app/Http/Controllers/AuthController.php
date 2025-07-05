@@ -186,11 +186,10 @@ class AuthController extends Controller{
 
         $request->validate([
             'productTitle' => 'required' ,
-            'productCategoryId' => 'required|unique:product,productCategoryId,' .$product->id,
+            'productCategoryId' => 'nullable' ,
             'productBarcode' => 'required|unique:product,productBarcode,' .$product->id,
             'productStatus' => 'required'
         ],[
-            'productCategoryId.unique' => 'Bu kategori numarası zaten kullanılıyor.',
             'productBarcode.unique' => 'Bu kategori barkodu bulunmakta.'
         ]);
 

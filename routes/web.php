@@ -44,8 +44,8 @@ Route::get('/category/listDeleted',[AuthController::class,'listDeleted'])->name(
 
 //PRODUCT
 
-Route::get('/product/add',[AuthController::class,'add'])->name('add')->middleware('auth');
-Route::post('/product/addpost',[AuthController::class,'addpost'])->name('addpost')->middleware('auth');
+Route::get('/product/add',[AuthController::class,'add'])->name('product.add')->middleware('auth');
+Route::post('/product/addpost',[AuthController::class,'addpost'])->name('product.addpost')->middleware('auth');
 
 
 Route::get('/product/list',function (){
