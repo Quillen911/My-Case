@@ -10,7 +10,8 @@
     <h1>Hoş Geldiniz {{auth()->user()->username }}</h1>
 
 
-    <a href="/admin-list">Tüm Kullanıcılar</a><br>
+    <a href="/user/addUser">Kullanıcı Ekle</a><br>
+    <a href="/user/listUser">Tüm Kullanıcılar</a><br>
     <a href="/add">Kategori Ekle</a><br>
     <a href="/product/add">Ürün Ekle</a><br>
     <a href="/product/list">Ürün Listesi</a><br>

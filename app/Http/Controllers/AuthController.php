@@ -2,41 +2,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Admin;
 use App\Models\Category;
+use App\Models\User;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 
+
 class AuthController extends Controller{
-    //kayıt
-    public function showRegister(){
-        return view('auth.register');
-    }
-         
     
-    public function register(Request $request){
-
-        $request->validate([
-            'username' => 'required|unique:admin,username',
-            'email' => 'required|email|unique:admin,email',
-            'password' => 'min:6',
-        ], [
-            'username.unique' => 'Bu kullanıcı adı zaten kullanılıyor.',
-            'email.unique' => 'Bu e-posta zaten kayıtlı.',
-            'email.email' => 'Geçerli bir e-posta adresi giriniz.',
-            'password.min' => 'Şifre en az 6 karakter olmalı.'
-        ]);
-
-        $user = Admin::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
-
-        Auth::login($user);
-        return redirect()->route('main');
-    }
-
     public function showLogin(){
         return view('auth.login'); 
     }
@@ -48,7 +21,13 @@ class AuthController extends Controller{
             'email' => 'required|email',
             'password' => 'required',
         ]);
-        
+
+        // Sadece belirli email ile girişe izin ver
+        if($info['email'] !== 'hecksoft0@gmail.com'){
+            return back()->withErrors([
+                'email' => 'Sadece admin kullanıcı giriş yapabilir.',
+            ]);
+        }
 
         if(Auth::attempt($info)){
             return redirect()->route('main'); //doğruysa giriş
@@ -61,36 +40,38 @@ class AuthController extends Controller{
         Auth::logout();
         return redirect()->route('login.form');
     }
-    public function edit($id){
-        $admin = \App\Models\Admin::findOrFail($id);
-        return view('admin.edit', compact('admin'));
-    }
-    public function delete($id){
-        $admin = \App\Models\Admin::findOrFail($id);
-        $admin->delete();
-        return redirect()->route('admin.list');
-    }
-    public function deletedAdmin(){
-        $admin = \App\Models\Admin::onlyTrashed()->get();
-        return view('admin.deletedAdmin',compact('admin'));
-    }
-    public function update(Request $request, $id){
-        $admin= \App\Models\Admin::findOrFail($id);
 
+    //USER
+
+    public function addUser(){
+        return view('user.addUser');
+    }
+    public function postUser(Request $request){
         $request->validate([
-            'username' => 'required|unique:admin,username,' .$admin->id,
-            'email' => 'required|email|unique:admin,email,' .$admin->id,
+            'username' => 'required|unique:users,username',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required'
         ], [
             'username.unique' => 'Bu kullanıcı adı zaten kullanılıyor.',
             'email.unique' => 'Bu e-posta zaten kayıtlı.',
             'email.email' => 'Geçerli bir e-posta adresi giriniz.',
         ]);
-        $admin->username =$request->username;
-        $admin->email =$request->email;
-        $admin->save();
 
-        return redirect()->route('admin.list');
+        $user = User::Create([
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+        return redirect()->route('addUser');
+        
     }
+
+    public function editUser($id){
+        $user = \App\Models\User::findOrFail($id);
+        return view('user.editUser',compact('user'));
+    }
+    
+
     //Category
 
     public function addCategory(){

@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Models\Category;
-use App\Models\Admin;
 use App\Models\Product;
+use App\Models\User;
 
 Route::get('/register', [AuthController::class,'showRegister'])->name('register.form');
 Route::post('/register', [AuthController::class,'register'])->name('register');
@@ -17,15 +17,16 @@ Route::get('/main', function () {
 
 Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
 
-Route::get('/admin-list', function(){
-    $admins = Admin::all();
-    return view('admin.list', compact('admins'));
-})->middleware('auth')->name('admin.list');
+// USER
+Route::get('/user/addUser',[AuthController::class, 'addUser'])->name('addUser')->middleware('auth');
+Route::post('/user/postUser',[AuthController::class, 'postUser'])->name('user.postUser')->middleware('auth');
+Route::get('/user/listUser',function(){
+    $user=User::all();
+    return view('user.listUser', compact('user'));
+})->name('listUser')->middleware('auth');
 
-Route::get('/admin/{id}/edit', [AuthController::class, 'edit'])->name('editAdmin')->middleware('auth');
-Route::post('/admin/{id}/edit', [AuthController::class, 'update'])->name('updateAdmin')->middleware('auth');
-Route::delete('/admin/{id}', [AuthController::class, 'delete'])->name('deleteAdmin')->middleware('auth');
-Route::get('/admin/deletedAdmin', [AuthController::class, 'deletedAdmin'])->name('deletedAdmin')->middleware('auth');
+Route::get('/user/{id}/edit',[AuthController::class, 'editUser'])->name('editUser')->middleware('auth');
+Route::post('/user/{id}/edit',[AuthController::class, 'updateUser'])->name('updateUser')->middleware('auth');
 
 //CATEGORY
 
