@@ -89,20 +89,18 @@ class AuthController extends Controller{
         ]);
         return view('user.addUser', ['success' => 'Kullanıcı başarıyla eklendi.']);
     }
-    public function editVerify(){
-        return view('user.editVerify');
+    public function editVerify($id){
+        return view('user.editVerify', ['id' => $id]);
     }
 
-    public function postEditVerify(Request $request){
-        $info = $request->only('password');
+    public function postEditVerify(Request $request, $id){
         $request->validate([
             'password' => 'required',
         ]);
         $user = Auth::user();
         if(Auth::attempt(['email' => $user->email, 'password' => $request->password])){
-            return redirect()->route('editUser', ['id' => $user->id]);
+            return redirect()->route('editUser', ['id' => $id]);
         }
-
         return back()->withErrors(['password' => 'Şifre yanlış!']);
     }
 
@@ -172,13 +170,9 @@ class AuthController extends Controller{
             $error = 'Lütfen silmek için en az bir kullanıcı seçin.';
             return view('user.listUser', compact('user', 'error', 'success'));
         }
-        // Admin (id=1) silinmesin
-        $ids = array_filter($ids, function($id) { return $id != 1; });
         if (!empty($ids)) {
             User::whereIn('id', $ids)->delete(); // Soft delete
             $success = 'Seçilen kullanıcılar silindi.';
-        } else {
-            $error = 'Admin silinemez.';
         }
         $user = User::all(); // Silme sonrası güncel liste
         return view('user.listUser', compact('user', 'error', 'success'));
