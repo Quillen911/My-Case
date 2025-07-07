@@ -21,14 +21,7 @@ class AuthController extends Controller{
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
-        // Sadece belirli email ile girişe izin ver
-        if($info['email'] !== 'hecksoft0@gmail.com'){
-            return back()->withErrors([
-                'email' => 'Sadece admin kullanıcı giriş yapabilir.',
-            ]);
-        }
-
+        
         if(Auth::attempt($info)){
             return redirect()->route('main'); //doğruysa giriş
         }
@@ -65,10 +58,57 @@ class AuthController extends Controller{
         return redirect()->route('addUser');
         
     }
+    public function editVerify(){
+        return view('user.editVerify');
+    }
+
+    public function postEditVerify(Request $request){
+        $info = $request->only('password');
+        $request->validate([
+            'password' => 'required',
+        ]);
+        $user = Auth::user();
+        if(Auth::attempt(['email' => $user->email, 'password' => $request->password])){
+            // Burada editlenecek kullanıcı id'sini session veya route ile taşımalısın!
+            return redirect()->route('editUser', ['id' => $user->id]);
+        }
+
+        return back()->withErrors(['password' => 'Şifre yanlış!']);
+    }
 
     public function editUser($id){
         $user = \App\Models\User::findOrFail($id);
         return view('user.editUser',compact('user'));
+    }
+    public function updateUser(Request $request, $id){
+        $user = \App\Models\User::findOrFail($id);
+
+        $request->validate([
+            'username' => 'required|unique:users,username'. $user->id , 
+            'email' => 'required|email|unique:users,email'. $user->id ,
+        ], [
+            'username.unique' => 'Bu kullanıcı adı zaten kullanılıyor.',
+            'email.unique' => 'Bu e-posta zaten kayıtlı.',
+            'email.email' => 'Geçerli bir e-posta adresi giriniz.',
+        ]);
+
+        $user -> username = $request->username;
+        $user -> email = $request->email;
+        $user -> save();
+        
+        return redirect()->route('listUser');
+    }
+    public function deleteUser($id){
+        if($id ==1){
+            return redirect()->route('listUser');
+        }
+        $user=\App\Models\User::findOrFail($id);
+        $user->delete();
+        return redirect()->route('listUser');
+    }
+    public function deleteListUser(){
+        $user = \App\Models\User::onlyTrashed()->get();
+        return view('user.deleteListUser', compact('user'));
     }
     
 
