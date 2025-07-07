@@ -8,10 +8,17 @@
 <body>
     <h1>Yeni Kullanıcı Ekle</h1>
 
+    @if(isset($error))
+        <p style="color:red;">{{ $error }}</p>
+    @endif
+    @if(isset($success))
+        <p style="color:green;">{{ $success }}</p>
+    @endif
+
     <form action="{{route('user.postUser')}}" method="POST" >
         @csrf
-        <input type="text" name="username" placeholder='Kullanıcı Adı' required ><br>
-        <input type="email" name="email" placeholder='Kullanıcı Email' required ><br>
+        <input type="text" name="username" placeholder='Kullanıcı Adı' required value="{{ old('username', $old['username'] ?? '') }}"><br>
+        <input type="email" name="email" placeholder='Kullanıcı Email' required value="{{ old('email', $old['email'] ?? '') }}"><br>
         <input type="password" name="password" placeholder='Kullanıcı Şifre' required ><br>
         <button type='submit'>Ekle</button>
     </form>

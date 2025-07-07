@@ -6,12 +6,11 @@
     <title>Admin Giriş</title>
 </head>
 <body>
-    @if($errors->any())
-        <div>
-            @foreach($errors->all() as $error)
-                <p style="color:red;">{{ $error }}</p>
-            @endforeach
-        </div>
+@if(isset($error) && $error)
+        <p style="color:red;">{{ $error }}</p>
+    @endif
+    @if(isset($success) && $success)
+        <p style="color:green;">{{ $success }}</p>
     @endif
     <form action="{{ route('login') }}" method="POST">
         @csrf

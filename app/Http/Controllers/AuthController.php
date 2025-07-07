@@ -25,9 +25,8 @@ class AuthController extends Controller{
         if(Auth::attempt($info)){
             return redirect()->route('main'); //doğruysa giriş
         }
-        return back()->withErrors([
-            'email' => 'Email veya şifre yanlış', //yanlış
-        ]);
+        // Hatalı girişte error mesajı ile view'a dön
+        return view('auth.login', ['error' => 'Email veya şifre yanlış']);
     }
     public function logout(){
         Auth::logout();
@@ -40,23 +39,55 @@ class AuthController extends Controller{
         return view('user.addUser');
     }
     public function postUser(Request $request){
-        $request->validate([
-            'username' => 'required|unique:users,username',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required'
-        ], [
+        $messages = [
             'username.unique' => 'Bu kullanıcı adı zaten kullanılıyor.',
+            'username.alpha_num' => 'Kullanıcı adı sadece harf ve rakam içermelidir.',
+            'username.regex' => 'Kullanıcı adı boşluk içeremez.',
             'email.unique' => 'Bu e-posta zaten kayıtlı.',
             'email.email' => 'Geçerli bir e-posta adresi giriniz.',
-        ]);
+            'username.required' => 'Kullanıcı adı zorunludur.',
+            'email.required' => 'E-posta zorunludur.',
+            'password.required' => 'Şifre zorunludur.',
+            'password.regex' => 'Şifre en az 6 karakter olmalı, bir büyük harf, bir küçük harf ve bir sayı içermelidir.'
+        ];
 
-        $user = User::Create([
+        $validator = \Validator::make($request->all(), [
+            'username' => [
+                'required',
+                'unique:users,username',
+                'alpha_num',
+                'regex:/^\S+$/'
+            ],
+            'email' => 'required|email|unique:users,email',
+            'password' => [
+                'required',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/'
+            ]
+        ], $messages);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            $firstError = null;
+            if ($errors->has('username')) {
+                $firstError = $errors->first('username');
+            } elseif ($errors->has('email')) {
+                $firstError = $errors->first('email');
+            } elseif ($errors->has('password')) {
+                $firstError = $errors->first('password');
+            }
+            return view('user.addUser', [
+                'error' => $firstError,
+                'success' => null,
+                'old' => $request->all()
+            ]);
+        }
+
+        User::create([
             'username' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
-        return redirect()->route('addUser');
-        
+        return view('user.addUser', ['success' => 'Kullanıcı başarıyla eklendi.']);
     }
     public function editVerify(){
         return view('user.editVerify');
@@ -82,30 +113,49 @@ class AuthController extends Controller{
     public function updateUser(Request $request, $id){
         $user = \App\Models\User::findOrFail($id);
 
-        $request->validate([
-            'username' => 'required|unique:users,username'. $user->id , 
-            'email' => 'required|email|unique:users,email'. $user->id ,
-        ], [
+        $messages = [
             'username.unique' => 'Bu kullanıcı adı zaten kullanılıyor.',
+            'username.alpha_num' => 'Kullanıcı adı sadece harf ve rakam içermelidir.',
+            'username.regex' => 'Kullanıcı adı boşluk içeremez.',
             'email.unique' => 'Bu e-posta zaten kayıtlı.',
             'email.email' => 'Geçerli bir e-posta adresi giriniz.',
-        ]);
+            'username.required' => 'Kullanıcı adı zorunludur.',
+            'email.required' => 'E-posta zorunludur.',
+        ];
 
-        $user -> username = $request->username;
-        $user -> email = $request->email;
-        $user -> save();
-        
-        return redirect()->route('listUser');
-    }
-    public function deleteUser(Request $request, $id){
-        
-        $user=\App\Models\User::findOrFail($id);
-        $choices = $request->input('userID',[]);
-        $user = array_diff($user,$choices); 
-        if(!empty($choices)){
-            User::whereIn('id', $choices)->delete();
+        $validator = \Validator::make($request->all(), [
+            'username' => [
+                'required',
+                'unique:users,username,' . $user->id,
+                'alpha_num',
+                'regex:/^\S+$/'
+            ],
+            'email' => 'required|email|unique:users,email,' . $user->id,
+        ], $messages);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            $firstError = null;
+            if ($errors->has('username')) {
+                $firstError = $errors->first('username');
+            } elseif ($errors->has('email')) {
+                $firstError = $errors->first('email');
+            }
+            return view('user.editUser', [
+                'user' => $user,
+                'error' => $firstError,
+                'success' => null,
+            ]);
         }
-        return redirect()->route('listUser');
+
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->save();
+
+        return view('user.editUser', [
+            'user' => $user,
+            'success' => 'Kullanıcı başarıyla güncellendi.',
+        ]);
     }
     public function deleteListUser(){
         $user = \App\Models\User::onlyTrashed()->get();
@@ -140,21 +190,33 @@ class AuthController extends Controller{
         return view('category.addCategory');
     }
     public function showCategory(Request $request){
-        
-        $request->validate([
+        $messages = [
+            'categoryTitle.required' => 'Kategori adı zorunludur.',
+            'categoryTitle.unique' => 'Bu kategori adı zaten kullanılıyor.',
+            'categoryDesc.required' => 'Kategori açıklaması zorunludur.',
+            'categoryStatus.required' => 'Kategori durumu zorunludur.'
+        ];
+        $validator = \Validator::make($request->all(), [
             'categoryTitle' => 'required|unique:category,categoryTitle',
             'categoryDesc' => 'required',
             'categoryStatus' => 'required',
-        ],[
-            'categoryTitle.unique' => 'Bu kategori adı zaten kullanılıyor.'
-        ]);
-
-        $category = Category::create([
+        ], $messages);
+        if ($validator->fails()) {
+            return view('category.addCategory', [
+                'error' => $validator->errors()->first(),
+                'success' => null,
+                'old' => $request->all()
+            ]);
+        }
+        Category::create([
             'categoryTitle' => $request->categoryTitle,
             'categoryDesc' => $request->categoryDesc,
             'categoryStatus' =>$request->categoryStatus,
         ]);
-        return redirect()->route('add');
+        return view('category.addCategory', [
+            'success' => 'Kategori başarıyla eklendi.',
+            'old' => []
+        ]);
     }
     public function editCategory($id){
         $category = \App\Models\Category::findOrFail($id);
@@ -162,24 +224,34 @@ class AuthController extends Controller{
     }
     public function updateCategory(Request $request, $id){
         $category = \App\Models\Category::findOrFail($id);
-
-        $request->validate([
+        $messages = [
+            'categoryTitle.required' => 'Kategori adı zorunludur.',
+            'categoryTitle.unique' => 'Bu kategori adı zaten kullanılıyor.',
+            'categoryDesc.required' => 'Kategori açıklaması zorunludur.',
+            'categoryStatus.required' => 'Kategori durumu zorunludur.'
+        ];
+        $validator = \Validator::make($request->all(), [
             'categoryTitle' => 'required|unique:category,categoryTitle,' .$category->id,
             'categoryDesc' => 'required',
             'categoryStatus' => 'required',
-        ],[
-            'categoryTitle.unique' => 'Bu kategori adı zaten kullanılıyor.'
+        ], $messages);
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $category->categoryTitle = $request->categoryTitle;
+        $category->categoryDesc = $request->categoryDesc;
+        $category->categoryStatus = $request->categoryStatus;
+        $category->save();
+        return view('category.editCategory', [
+            'category' => $category,
+            'success' => 'Kategori başarıyla güncellendi.'
         ]);
-
-        $category ->categoryTitle = $request->categoryTitle;
-        $category ->categoryDesc = $request->categoryDesc;
-        $category ->categoryStatus = $request->categoryStatus;
-        $category ->save();
-
-        return redirect()->route('category.list');
     }
     public function deleteCategory($id){
         $category = \App\Models\Category::findOrFail($id);
+        Product::where('productCategoryId', $id)->update(['productCategoryId' => null]);
         $category->delete();
         return redirect()->route('category.list');
     }
@@ -195,25 +267,34 @@ class AuthController extends Controller{
         return view('product.add', compact('categories'));
     }
     public function addpost(Request $request){
-
-        $request->validate([
+        $messages = [
+            'productTitle.required' => 'Ürün adı zorunludur.',
+            'productBarcode.required' => 'Ürün barkodu zorunludur.',
+            'productBarcode.unique' => 'Bu barkod zaten kullanılıyor.',
+            'productStatus.required' => 'Ürün durumu zorunludur.'
+        ];
+        $validator = \Validator::make($request->all(), [
             'productTitle' => 'required',
             'productCategoryId' => 'nullable',
             'productBarcode' => 'required|unique:product,productBarcode',
             'productStatus' => 'required',
-        ],[
-            'productBarcode.unique' => 'Bu barkod zaten kullanılıyor.'
-
-        ]);
-
-        $product = Product::create([
+        ], $messages);
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        Product::create([
             'productTitle' => $request->productTitle,
             'productCategoryId' => $request->productCategoryId,
             'productBarcode' => $request->productBarcode, 
             'productStatus' => $request->productStatus, 
         ]);
-        return redirect()->route('product.add');
-
+        $categories = Category::all();
+        return view('product.add', [
+            'categories' => $categories,
+            'success' => 'Ürün başarıyla eklendi.'
+        ]);
     }
     public function deleteProduct($id){
         $product = \App\Models\Product::findOrFail($id);
@@ -226,23 +307,32 @@ class AuthController extends Controller{
     }
     public function updateProduct(Request $request, $id){
         $product = \App\Models\Product::findOrFail($id);
-
-        $request->validate([
-            'productTitle' => 'required' ,
-            'productCategoryId' => 'nullable' ,
+        $messages = [
+            'productTitle.required' => 'Ürün adı zorunludur.',
+            'productBarcode.required' => 'Ürün barkodu zorunludur.',
+            'productBarcode.unique' => 'Bu barkod zaten kullanılıyor.',
+            'productStatus.required' => 'Ürün durumu zorunludur.'
+        ];
+        $validator = \Validator::make($request->all(), [
+            'productTitle' => 'required',
+            'productCategoryId' => 'nullable',
             'productBarcode' => 'required|unique:product,productBarcode,' .$product->id,
-            'productStatus' => 'required'
-        ],[
-            'productBarcode.unique' => 'Bu barkod zaten kullanılıyor.'
+            'productStatus' => 'required',
+        ], $messages);
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $product->productTitle = $request->productTitle;
+        $product->productCategoryId = $request->productCategoryId;
+        $product->productBarcode = $request->productBarcode;
+        $product->productStatus = $request->productStatus;
+        $product->save();
+        return view('product.editProduct', [
+            'product' => $product,
+            'success' => 'Ürün başarıyla güncellendi.'
         ]);
-
-        $product ->productTitle = $request->productTitle;
-        $product ->productCategoryId = $request->productCategoryId;
-        $product ->productBarcode = $request->productBarcode;
-        $product ->productStatus = $request->productStatus;
-        $product ->save();
-
-        return redirect()->route('list');
     }
     public function productListDeleted(){
         $categories = Category::all();

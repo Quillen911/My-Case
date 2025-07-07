@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('categoryDesc');
             $table->string('categoryStatus');
             $table->timestamps();
+
         });
     }
 

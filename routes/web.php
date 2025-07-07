@@ -27,7 +27,6 @@ Route::get('/user/{id}/edit',[AuthController::class, 'editUser'])->name('editUse
 Route::post('/user/{id}/edit',[AuthController::class, 'updateUser'])->name('updateUser')->middleware('auth');
 Route::get('/user/editVerify', [AuthController::class, 'editVerify'])->name('editVerify')->middleware('auth');
 Route::post('/user/postEditVerify', [AuthController::class, 'postEditVerify'])->name('postEditVerify')->middleware('auth');
-Route::delete('/user/{id}', [AuthController::class, 'deleteUser'])->name('deleteUser')->middleware('auth');
 Route::get('/user/deleteListUser', [AuthController::class, 'deleteListUser'])->name('deleteListUser')->middleware('auth');
 Route::post('/user/bulk-delete', [AuthController::class, 'bulkDeleteUser'])->name('bulkDeleteUser')->middleware('auth');
 

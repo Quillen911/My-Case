@@ -7,16 +7,31 @@
 </head>
 <body>
     <h1>Düzenle</h1>
+    @if(isset($success))
+        <p style="color:green;">{{ $success }}</p>
+    @endif
     <form action="{{ route('updateProduct', $product->id) }}" method="POST">
         @csrf
         <label>Ürün Adı:</label>
-        <input type="text" name="productTitle" value="{{ $product->productTitle }}"><br>
+        <input type="text" name="productTitle" value="{{ old('productTitle', $product->productTitle) }}"><br>
+        @error('productTitle')
+            <p style="color:red;">{{ $message }}</p>
+        @enderror
         <label>Ürün Kategori Numarası:</label>
-        <input type="text" name="productCategoryId" value="{{ $product->productCategoryId }}"><br>
+        <input type="text" name="productCategoryId" value="{{ old('productCategoryId', $product->productCategoryId) }}"><br>
+        @error('productCategoryId')
+            <p style="color:red;">{{ $message }}</p>
+        @enderror
         <label>Ürün Barkodu:</label>
-        <input type="text" name="productBarcode" value="{{ $product->productBarcode }}"><br>
+        <input type="text" name="productBarcode" value="{{ old('productBarcode', $product->productBarcode) }}"><br>
+        @error('productBarcode')
+            <p style="color:red;">{{ $message }}</p>
+        @enderror
         <label>Ürün Durumu:</label>
-        <input type="text" name="productStatus" value="{{ $product->productStatus }}"><br>
+        <input type="text" name="productStatus" value="{{ old('productStatus', $product->productStatus) }}"><br>
+        @error('productStatus')
+            <p style="color:red;">{{ $message }}</p>
+        @enderror
         <button type="submit">Kaydet</button>
     </form>
     <a href="{{ route('list') }}">Geri Dön</a>
