@@ -69,7 +69,6 @@ class AuthController extends Controller{
         ]);
         $user = Auth::user();
         if(Auth::attempt(['email' => $user->email, 'password' => $request->password])){
-            // Burada editlenecek kullanıcı id'sini session veya route ile taşımalısın!
             return redirect()->route('editUser', ['id' => $user->id]);
         }
 
@@ -98,12 +97,14 @@ class AuthController extends Controller{
         
         return redirect()->route('listUser');
     }
-    public function deleteUser($id){
-        if($id ==1){
-            return redirect()->route('listUser');
-        }
+    public function deleteUser(Request $request, $id){
+        
         $user=\App\Models\User::findOrFail($id);
-        $user->delete();
+        $choices = $request->input('userID',[]);
+        $user = array_diff($user,$choices); 
+        if(!empty($choices)){
+            User::whereIn('id', $choices)->delete();
+        }
         return redirect()->route('listUser');
     }
     public function deleteListUser(){
@@ -111,6 +112,27 @@ class AuthController extends Controller{
         return view('user.deleteListUser', compact('user'));
     }
     
+    public function bulkDeleteUser(Request $request)
+    {
+        $ids = $request->input('user_ids', []);
+        $user = User::all();
+        $error = null;
+        $success = null;
+        if (empty($ids)) {
+            $error = 'Lütfen silmek için en az bir kullanıcı seçin.';
+            return view('user.listUser', compact('user', 'error', 'success'));
+        }
+        // Admin (id=1) silinmesin
+        $ids = array_filter($ids, function($id) { return $id != 1; });
+        if (!empty($ids)) {
+            User::whereIn('id', $ids)->delete(); // Soft delete
+            $success = 'Seçilen kullanıcılar silindi.';
+        } else {
+            $error = 'Admin silinemez.';
+        }
+        $user = User::all(); // Silme sonrası güncel liste
+        return view('user.listUser', compact('user', 'error', 'success'));
+    }
 
     //Category
 
