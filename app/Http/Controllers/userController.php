@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserValidation\StoreUserRequest;
+use App\Http\Requests\UserValidation\ShowUserRequest;
 use App\Http\Requests\UserValidation\UpdateUserRequest;
 use App\Http\Requests\UserValidation\AdminVerifyRequest;
 use App\Models\User;
@@ -14,7 +14,7 @@ class UserController extends Controller {
         return view('user.addUser');
     }
 
-    public function postUser(StoreUserRequest $request){
+    public function postUser(ShowUserRequest $request){
         User::create([
             'username' => $request->username,
             'email' => $request->email,

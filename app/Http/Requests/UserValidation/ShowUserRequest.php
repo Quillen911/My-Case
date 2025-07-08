@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\UserValidation\ShowUserRequest;
+namespace App\Http\Requests\UserValidation;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Controllers\UserController;

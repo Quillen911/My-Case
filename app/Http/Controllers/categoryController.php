@@ -7,6 +7,7 @@ use App\Http\Requests\CategoryValidation\UpdateCategoryRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
+use App\Models\Product;
 
 class CategoryController extends Controller{
     public function addCategory(){

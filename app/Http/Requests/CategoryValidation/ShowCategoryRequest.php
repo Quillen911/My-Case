@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\CategoryValidation\ShowCategoryRequest;
+namespace App\Http\Requests\CategoryValidation;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Controllers\CategoryController;
@@ -21,8 +21,8 @@ class ShowCategoryRequest extends FormRequest{
         return[
             'categoryTitle.required' => 'Kategori adı zorunludur.',
             'categoryTitle.unique' => 'Bu kategori adı zaten kullanılıyor.',
-            'categoryDesc' => 'Kategori açıklaması zorunludur.',
-            'categoryStatus' => 'Kategori durumu zorunludur.',
+            'categoryDesc.required' => 'Kategori açıklaması zorunludur.',
+            'categoryStatus.required' => 'Kategori durumu zorunludur.',
         ];
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\ProductValidation\ShowProductRequest;
+namespace App\Http\Requests\ProductValidation;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Controllers\ProductController;
@@ -10,6 +10,7 @@ class ShowProductRequest extends FormRequest{
         return true;
     }
     public function rules(): array{
+        $id = $this->route('id');
         return[
             'productTitle' => 'required',
             'productCategoryId' => 'nullable',

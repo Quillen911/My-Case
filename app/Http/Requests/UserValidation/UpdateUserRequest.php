@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\UserValidation\UpdateUserRequest;
+namespace App\Http\Requests\UserValidation;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Controllers\UserController;
@@ -21,7 +21,7 @@ class UpdateUserRequest extends FormRequest{
                 'regex:/^\S+$/',
                 'unique:users,username,' . $id,
             ],
-            'email' => 'required|email|unique:users,email,' .$id,
+            'email' => 'required|email|unique:users,email,' . $id,
         ];
     }
     public function messages(): array

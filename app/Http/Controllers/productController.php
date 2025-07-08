@@ -34,7 +34,7 @@ class ProductController extends Controller{
     }
     public function deleteProduct($id){
         $product = \App\Models\Product::findOrFail($id);
-        delete();
+        $product->delete();
         return redirect()->route('list');
     }
     public function editProduct($id){
@@ -43,7 +43,7 @@ class ProductController extends Controller{
     }
     public function updateProduct(UpdateCategoryRequest $request, $id){
         $product =Product::findOrFail($id);
-        user->update([
+        $product->update([
             'productTitle' => $request->productTitle,
             'productCategoryId' => $request->productCategoryId,
             'productBarcode' => $request->productBarcode,

@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Http\Requests\ProductValidation\UpdateProductRequest;
+namespace App\Http\Requests\ProductValidation;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Controllers\ProductController;
 
-class UpdateCategoryRequest extends FormRequest{
+class UpdateProductRequest extends FormRequest{
     public function authorize(): bool{
         return true;
     }
     public function rules(): array{
+        $id = $this->route('id');
         return [
             'productTitle' => 'required',
             'productCategoryId' => 'nullable',
-            'productBarcode' => 'required|unique:product,productBarcode' .$id,
+            'productBarcode' => 'required|unique:product,productBarcode' . $id,
             'productStatus' => 'required', 
         ];
     }     

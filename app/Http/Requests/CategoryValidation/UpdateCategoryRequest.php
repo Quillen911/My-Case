@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\CategoryValidation\UpdateCategoryRequest;
+namespace App\Http\Requests\CategoryValidation;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Controllers\CategoryController;
@@ -12,7 +12,7 @@ class UpdateCategoryRequest extends FormRequest{
     public function rules(): array{
         $id = $this->route('id');
         return[
-            'categoryTitle' => 'required|unique:category,categoryTitle',
+            'categoryTitle' => 'required|unique:category,categoryTitle' . $id,
             'categoryDesc' => 'required',
             'categoryStatus' => 'required',
         ];
