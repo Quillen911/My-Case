@@ -186,6 +186,10 @@
         <a href="/category-list">📂 Kategori Listesi</a>
         
         <div class="logout-section">
+            <form action="{{ route('getSettings') }}" method="POST" class="logout-form">
+                @csrf
+                <button type="submit">Admin Ayarları</button>
+            </form>
             <form action="{{ route('logout') }}" method="POST" class="logout-form">
                 @csrf
                 <button type="submit">🚪 Çıkış Yap</button>

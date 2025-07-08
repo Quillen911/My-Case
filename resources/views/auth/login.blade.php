@@ -115,8 +115,8 @@
     <div class="container">
         <h1>ADMİN GİRİŞ</h1>
 
-        @if(isset($error) && $error)
-            <p style="color:red;">{{ $error }}</p>
+        @if(isset($error))
+            <div class="error-message" style="color:red;text-align:center;margin-bottom:10px;">{{ $error }}</div>
         @endif
         @if(isset($success) && $success)
             <p style="color:green;">{{ $success }}</p>
@@ -127,6 +127,7 @@
             <input type="password" name="password" placeholder="Şifre" required ><br>
             <button type="submit" >Giriş Yap</button>
         </form>
+        <!-- Şifremi Unuttum linki kaldırıldı -->
 </div>
 </body>
 </html>

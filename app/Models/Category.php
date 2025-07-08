@@ -26,13 +26,4 @@ class Category extends Model
         'categoryDesc',
         'categoryStatus',
     ];
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
 }
