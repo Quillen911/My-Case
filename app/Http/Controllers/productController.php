@@ -7,7 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 
-class productController extends Controller{
+class ProductController extends Controller{
     public function add(){
         $categories= Category::all();
         return view('product.add', compact('categories'));

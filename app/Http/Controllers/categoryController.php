@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 
-class categoryController extends Controller{
+class CategoryController extends Controller{
     public function addCategory(){
         return view('category.addCategory');
     }
