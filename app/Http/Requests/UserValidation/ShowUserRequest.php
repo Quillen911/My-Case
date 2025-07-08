@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\UserValidation\StoreUserRequest;
+namespace App\Http\Requests\UserValidation\ShowUserRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Controllers\UserController;
 
-class StoreUserRequest extends FormRequest{
+class ShowUserRequest extends FormRequest{
     public function authorize(): bool
     {
         return true;
@@ -13,8 +13,8 @@ class StoreUserRequest extends FormRequest{
 
     public function rules(): array
     {
-       $id = $this->route('id');
-       return[
+        $id = $this->route('id');
+        return[
             'username' =>[
                 'required',
                 'alpha_num',
@@ -22,10 +22,9 @@ class StoreUserRequest extends FormRequest{
                 'unique:users,username,' . $id,
             ],
             'email' => 'required|email|unique:users,email,' .$id,
-        ];
-        
+        ];    
     }
-    public function messages():array
+    public function messages(): array
     {
         return [
             'username.unique' => 'Bu kullanıcı adı zaten kullanılıyor.',

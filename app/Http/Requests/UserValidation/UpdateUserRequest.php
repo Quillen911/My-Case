@@ -14,17 +14,16 @@ class UpdateUserRequest extends FormRequest{
     public function rules(): array
     {
         $id = $this->route('id'); 
-        return [
-            'username' => [
+        return[
+            'username' =>[
                 'required',
                 'alpha_num',
                 'regex:/^\S+$/',
                 'unique:users,username,' . $id,
             ],
-            'email' => 'required|email|unique:users,email,' . $id,
+            'email' => 'required|email|unique:users,email,' .$id,
         ];
     }
-
     public function messages(): array
     {
         return [

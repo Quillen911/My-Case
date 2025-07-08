@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductController\ShowProductRequest;
+use App\Http\Requests\ProductController\UpdateProductRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
@@ -12,24 +14,7 @@ class ProductController extends Controller{
         $categories= Category::all();
         return view('product.add', compact('categories'));
     }
-    public function addpost(Request $request){
-        $messages = [
-            'productTitle.required' => 'Ürün adı zorunludur.',
-            'productBarcode.required' => 'Ürün barkodu zorunludur.',
-            'productBarcode.unique' => 'Bu barkod zaten kullanılıyor.',
-            'productStatus.required' => 'Ürün durumu zorunludur.'
-        ];
-        $validator = \Validator::make($request->all(), [
-            'productTitle' => 'required',
-            'productCategoryId' => 'nullable',
-            'productBarcode' => 'required|unique:product,productBarcode',
-            'productStatus' => 'required',
-        ], $messages);
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
+    public function addpost(ShowProductRequest $request){
         Product::create([
             'productTitle' => $request->productTitle,
             'productCategoryId' => $request->productCategoryId,
@@ -49,37 +34,21 @@ class ProductController extends Controller{
     }
     public function deleteProduct($id){
         $product = \App\Models\Product::findOrFail($id);
-        $product->delete();
+        delete();
         return redirect()->route('list');
     }
     public function editProduct($id){
         $product = \App\Models\Product::findOrFail($id);
         return view('product.editProduct', compact('product'));
     }
-    public function updateProduct(Request $request, $id){
-        $product = \App\Models\Product::findOrFail($id);
-        $messages = [
-            'productTitle.required' => 'Ürün adı zorunludur.',
-            'productBarcode.required' => 'Ürün barkodu zorunludur.',
-            'productBarcode.unique' => 'Bu barkod zaten kullanılıyor.',
-            'productStatus.required' => 'Ürün durumu zorunludur.'
-        ];
-        $validator = \Validator::make($request->all(), [
-            'productTitle' => 'required',
-            'productCategoryId' => 'nullable',
-            'productBarcode' => 'required|unique:product,productBarcode,' .$product->id,
-            'productStatus' => 'required',
-        ], $messages);
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-        $product->productTitle = $request->productTitle;
-        $product->productCategoryId = $request->productCategoryId;
-        $product->productBarcode = $request->productBarcode;
-        $product->productStatus = $request->productStatus;
-        $product->save();
+    public function updateProduct(UpdateCategoryRequest $request, $id){
+        $product =Product::findOrFail($id);
+        user->update([
+            'productTitle' => $request->productTitle,
+            'productCategoryId' => $request->productCategoryId,
+            'productBarcode' => $request->productBarcode,
+            'productStatus' => $request->productStatus,
+        ]);
         return view('product.editProduct', [
             'product' => $product,
             'success' => 'Ürün başarıyla güncellendi.'

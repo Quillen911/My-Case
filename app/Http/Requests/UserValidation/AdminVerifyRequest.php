@@ -6,8 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Controllers\UserController;
 
 class AdminVerifyRequest extends FormRequest{
-    public function authorize(): bool
-    {
+    public function authorize(): bool{
         return true;
     }
     public function rules():array{
