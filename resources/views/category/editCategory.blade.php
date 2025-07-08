@@ -455,11 +455,7 @@
             
             <div class="floating-label">
                 <div class="input-wrapper">
-                    <select name="categoryStatus" class="status-select" required>
-                        <option value="">Durum Seçin</option>
-                        <option value="aktif" {{ old('categoryStatus', $category->categoryStatus) == 'aktif' ? 'selected' : '' }}>🟢 Aktif</option>
-                        <option value="pasif" {{ old('categoryStatus', $category->categoryStatus) == 'pasif' ? 'selected' : '' }}>🔴 Pasif</option>
-                    </select>
+                <input type="text" name="categoryStatus" value="{{ old('categoryStatus', $category->categoryStatus) }}" placeholder=" " required maxlength="100">
                     <label>
                         <span>🔄</span>
                         <span>Kategori Durumu</span>

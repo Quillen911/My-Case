@@ -1,13 +1,10 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AuthValidation\PostSettingsRequest;
 use Illuminate\Http\Request;
-use App\Models\Category;
 use App\Models\User;
-use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Hash;
 
 
 class AuthController extends Controller{
@@ -33,41 +30,18 @@ class AuthController extends Controller{
     public function getSettings(Request $request){
         $user = \Auth::user();
         return view('auth.settings', [
-            'admin' => $user, // blade'de değişiklik yapmadan çalışsın diye
+            'admin' => $user,
             'success' => session('success'),
             'error' => session('error'),
         ]);
     }
 
-    public function postSettings(Request $request){
+    public function postSettings(PostSettingsRequest $request){
         $user = \Auth::user();
-        $messages = [
-            'username.unique' => 'Bu kullanıcı adı zaten kullanılıyor.',
-            'username.alpha_num' => 'Kullanıcı adı sadece harf ve rakam içermelidir.',
-            'username.regex' => 'Kullanıcı adı boşluk içeremez.',
-            'email.unique' => 'Bu e-posta zaten kayıtlı.',
-            'email.email' => 'Geçerli bir e-posta adresi giriniz.',
-            'username.required' => 'Kullanıcı adı zorunludur.',
-            'email.required' => 'E-posta zorunludur.',
-        ];
-        $validator = \Validator::make($request->all(), [
-            'username' => [
-                'required',
-                'unique:users,username,' . $user->id,
-                'alpha_num',
-                'regex:/^\\S+$/'
-            ],
-            'email' => 'required|email|unique:users,email,' . $user->id,
-        ], $messages);
-
-        if ($validator->fails()) {
-            return redirect()->route('getSettings')->withInput()->with('error', $validator->errors()->first());
-        }
-
-        $user->username = $request->input('username');
-        $user->email = $request->input('email');
-        $user->save();
-
+        $user->update([
+            'username' => $request->input('username'),
+            'email' => $request->input('email'),
+        ]);    
         return redirect()->route('getSettings')->with('success', 'Bilgiler başarıyla güncellendi.');
     }
     public function main(){

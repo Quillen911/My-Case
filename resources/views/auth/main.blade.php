@@ -180,13 +180,13 @@
         
         <a href="/user/add">👤 Kullanıcı Ekle</a>
         <a href="/user/list">👥 Tüm Kullanıcılar</a>
-        <a href="/product/add">📁 Kategori Ekle</a>
+        <a href="/category/add">📁 Kategori Ekle</a>
         <a href="/category/list">📂 Kategori Listesi</a>
-        <a href="/product/list">📋 Ürün Listesi</a>
         <a href="/product/add">📦 Ürün Ekle</a>
+        <a href="/product/list">📋 Ürün Listesi</a>
         
         <div class="logout-section">
-            <form action="{{ route('getSettings') }}" method="POST" class="logout-form">
+            <form action="{{ route('getSettings') }}"  class="logout-form">
                 @csrf
                 <button type="submit">Admin Ayarları</button>
             </form>
