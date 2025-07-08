@@ -70,6 +70,9 @@ class AuthController extends Controller{
 
         return redirect()->route('getSettings')->with('success', 'Bilgiler başarıyla güncellendi.');
     }
+    public function main(){
+        return view('auth.main');
+    }
 
     public function logout(){
         \Auth::logout();

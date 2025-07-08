@@ -40,6 +40,10 @@ class categoryController extends Controller{
             'old' => []
         ]);
     }
+    public function listCategory(){
+        $category = Category::all();
+        return view('category.listCategory', compact('category'));
+    }
     public function editCategory($id){
         $category = \App\Models\Category::findOrFail($id);
         return view('category.editCategory', compact('category'));

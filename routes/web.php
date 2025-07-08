@@ -2,68 +2,61 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\userController;
-use App\Http\Controllers\categoryController;
-use App\Http\Controllers\productController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
 
-Route::get('/login', [AuthController::class,'showLogin'])->name('login.form');
-Route::post('/login', [AuthController::class,'login'])->name('login');
 
-Route::get('/main', function () {
-    return view('auth.main');
-})->middleware('auth')->name('main');
+//LOGIN
 
-Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
+Route::get('/login', [AuthController::class,'showLogin'])->name('login.form');                                  //Giriş                      
+Route::post('/login', [AuthController::class,'login'])->name('login');                                          //Giriş Onayı
 
-Route::get('/settings', [AuthController::class, 'getSettings'])->name('getSettings')->middleware('auth');
-Route::post('/settings', [AuthController::class, 'postSettings'])->name('postSettings')->middleware('auth');
+Route::middleware(['auth'])->group(function(){
+    //LOG OUT
+    Route::post('/logout',[AuthController::class, 'logout'])->name('logout');                                   //Çıkış
+    //MAIN
+    Route::prefix('/main')->group(function(){
+        Route::get('', [AuthController::class, 'main'])->name('main');                                          //Ana Sayfa
+        Route::get('/settings', [AuthController::class, 'getSettings'])->name('getSettings');                   //Ayarlar
+        Route::post('/settings', [AuthController::class, 'postSettings'])->name('postSettings');                //Ayarlar Verisi
+    });
 
-// USER
-Route::get('/user/addUser',[userController::class, 'addUser'])->name('addUser')->middleware('auth');
-Route::post('/user/postUser',[userController::class, 'postUser'])->name('user.postUser')->middleware('auth');
-Route::get('/user/listUser',function(){
-    $user=User::all();
-    return view('user.listUser', compact('user'));
-})->name('listUser')->middleware('auth');
+    // USER
+    Route::prefix('user')->group(function() {
+        Route::get('/add',[UserController::class, 'addUser'])->name('addUser');                                 //EKLE
+        Route::post('/postUser',[UserController::class, 'postUser'])->name('user.postUser');                    //EKLE için veri gönder
+        Route::get('/list',[UserController::class,'listUser'])->name('listUser');                               //Liste
+        Route::get('/{id}/edit',[UserController::class, 'editUser'])->name('editUser');                         //Düzenle
+        Route::post('/{id}/edit',[UserController::class, 'updateUser'])->name('updateUser');                    //Yeni Düzen Verisi
+        Route::get('/editVerify/{id}', [UserController::class, 'editVerify'])->name('editVerify');              //Admin Onayı
+        Route::post('/postEditVerify/{id}', [UserController::class, 'postEditVerify'])->name('postEditVerify'); //Admin Onaylandı Verisi
+        Route::get('/deleteListUser', [UserController::class, 'deleteListUser'])->name('deleteListUser');       //SİLİNENLER
+        Route::post('/bulk-delete', [UserController::class, 'bulkDeleteUser'])->name('bulkDeleteUser');         //SİLMEK
+    });
 
-Route::get('/user/{id}/edit',[userController::class, 'editUser'])->name('editUser')->middleware('auth');
-Route::post('/user/{id}/edit',[userController::class, 'updateUser'])->name('updateUser')->middleware('auth');
-Route::get('/user/editVerify/{id}', [userController::class, 'editVerify'])->name('editVerify')->middleware('auth');
-Route::post('/user/postEditVerify/{id}', [userController::class, 'postEditVerify'])->name('postEditVerify')->middleware('auth');
-Route::get('/user/deleteListUser', [userController::class, 'deleteListUser'])->name('deleteListUser')->middleware('auth');
-Route::post('/user/bulk-delete', [userController::class, 'bulkDeleteUser'])->name('bulkDeleteUser')->middleware('auth');
+    //CATEGORY
+    Route::prefix('category')->group(function () {
+        Route::get('/add', [CategoryController::class, 'addCategory'])->name('add');                            //EKLE
+        Route::post('/add', [CategoryController::class, 'showCategory'])->name('add.show');                     //EKLE için veri gönder
+        Route::get('/list', [CategoryController::class, 'listCategory'] )->name('category.list');               //Liste                                                               //Liste
+        Route::get('/{id}/edit', [CategoryController::class, 'editCategory'])->name('editCategory');            //Düzenle
+        Route::post('/{id}/edit', [CategoryController::class, 'updateCategory'])->name('updateCategory');       //Yeni Düzen Verisi
+        Route::delete('/{id}', [CategoryController::class, 'deleteCategory'])->name('deleteCategory');          //SİLMEK
+        Route::get('/listDeleted', [CategoryController::class, 'listDeleted'])->name('listDeleted');            //SİLİNENLER
+    });
 
-//CATEGORY
-
-Route::get('/add', [categoryController::class, 'addCategory'])->name('add');
-Route::post('/add', [categoryController::class, 'showCategory'])->name('add.show');
-
-Route::get('/category-list',function (){
-    $category = Category::all();
-    return view('category.listCategory', compact('category'));
-})->middleware('auth')->name('category.list');
-
-Route::get('/category/{id}/edit', [categoryController::class, 'editCategory'])->name('editCategory')->middleware('auth');
-Route::post('/category/{id}/edit', [categoryController::class, 'updateCategory'])->name('updateCategory')->middleware('auth');
-Route::delete('/category/{id}', [categoryController::class, 'deleteCategory'])->name('deleteCategory')->middleware('auth');
-Route::get('/category/listDeleted',[categoryController::class,'listDeleted'])->name('listDeleted')->middleware('auth');
-
-//PRODUCT
-
-Route::get('/product/add',[productController::class,'add'])->name('product.add')->middleware('auth');
-Route::post('/product/addpost',[productController::class,'addpost'])->name('product.addpost')->middleware('auth');
-
-
-Route::get('/product/list',function (){
-    $product = Product::all();
-    $categories = Category::all();
-    return view('product.list', compact('product', 'categories'));
-})->middleware('auth')->name('list');
-
-Route::delete('/product/{id}', [productController::class, 'deleteProduct'])->name('deleteProduct')->middleware('auth');
-Route::get('/product/{id}/edit', [productController::class, 'editProduct'])->name('editProduct')->middleware('auth');
-Route::post('/product/{id}/edit', [productController::class, 'updateProduct'])->name('updateProduct')->middleware('auth');
-Route::get('/product/productListDeleted', [productController::class, 'productListDeleted'])->name('productListDeleted')->middleware('auth');
+    //PRODUCT
+    Route::prefix('product')->group(function () {
+        Route::get('/add',[ProductController::class,'add'])->name('product.add');                               //EKLE
+        Route::post('/addpost',[ProductController::class,'addpost'])->name('product.addpost');                  //EKLE için veri gönder
+        Route::get('/list', [ProductController::class, 'listProduct'])->name('list');                           //Liste                                                     //LİSTE
+        Route::delete('/{id}', [ProductController::class, 'deleteProduct'])->name('deleteProduct');             //SİL
+        Route::get('/{id}/edit', [ProductController::class, 'editProduct'])->name('editProduct');               //Düzenle
+        Route::post('/{id}/edit', [ProductController::class, 'updateProduct'])->name('updateProduct');          //Yeni Düzen Verisi    
+        Route::get('/productListDeleted', [ProductController::class, 'productListDeleted'])->name('productListDeleted');//SİLİNENLER
+    });
+}); 

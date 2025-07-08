@@ -42,6 +42,11 @@ class productController extends Controller{
             'success' => 'Ürün başarıyla eklendi.'
         ]);
     }
+    public function listProduct(){
+        $product = Product::all();
+        $categories = Category::all();
+        return view('product.list', compact('product', 'categories'));
+    }
     public function deleteProduct($id){
         $product = \App\Models\Product::findOrFail($id);
         $product->delete();

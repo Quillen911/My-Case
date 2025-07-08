@@ -127,7 +127,6 @@
             <input type="password" name="password" placeholder="Şifre" required ><br>
             <button type="submit" >Giriş Yap</button>
         </form>
-        <!-- Şifremi Unuttum linki kaldırıldı -->
 </div>
 </body>
 </html>
