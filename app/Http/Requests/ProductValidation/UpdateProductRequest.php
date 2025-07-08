@@ -14,7 +14,7 @@ class UpdateProductRequest extends FormRequest{
         return [
             'productTitle' => 'required',
             'productCategoryId' => 'nullable',
-            'productBarcode' => 'required|unique:product,productBarcode' . $id,
+            'productBarcode' => 'required|unique:product,productBarcode,' . $id,
             'productStatus' => 'required', 
         ];
     }     

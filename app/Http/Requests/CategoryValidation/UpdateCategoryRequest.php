@@ -12,7 +12,7 @@ class UpdateCategoryRequest extends FormRequest{
     public function rules(): array{
         $id = $this->route('id');
         return[
-            'categoryTitle' => 'required|unique:category,categoryTitle' . $id,
+            'categoryTitle' => 'required|unique:category,categoryTitle,' . $id,
             'categoryDesc' => 'required',
             'categoryStatus' => 'required',
         ];
@@ -21,8 +21,8 @@ class UpdateCategoryRequest extends FormRequest{
         return[
             'categoryTitle.required' => 'Kategori adı zorunludur.',
             'categoryTitle.unique' => 'Bu kategori adı zaten kullanılıyor.',
-            'categoryDesc' => 'Kategori açıklaması zorunludur.',
-            'categoryStatus' => 'Kategori durumu zorunludur.',
+            'categoryDesc.required' => 'Kategori açıklaması zorunludur.',
+            'categoryStatus.required' => 'Kategori durumu zorunludur.',
         ];
     }
 }

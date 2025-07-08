@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProductController\ShowProductRequest;
-use App\Http\Requests\ProductController\UpdateProductRequest;
+use App\Http\Requests\ProductValidation\ShowProductRequest;
+use App\Http\Requests\ProductValidation\UpdateProductRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
@@ -41,7 +41,7 @@ class ProductController extends Controller{
         $product = \App\Models\Product::findOrFail($id);
         return view('product.editProduct', compact('product'));
     }
-    public function updateProduct(UpdateCategoryRequest $request, $id){
+    public function updateProduct(UpdateProductRequest $request, $id){
         $product =Product::findOrFail($id);
         $product->update([
             'productTitle' => $request->productTitle,
