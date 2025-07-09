@@ -45,7 +45,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/list', [CategoryController::class, 'listCategory'] )->name('category.list');               //Liste                                                               //Liste
         Route::get('/{id}/edit', [CategoryController::class, 'editCategory'])->name('editCategory');            //Düzenle
         Route::post('/{id}/edit', [CategoryController::class, 'updateCategory'])->name('updateCategory');       //Yeni Düzen Verisi
-        Route::delete('/{id}', [CategoryController::class, 'deleteCategory'])->name('deleteCategory');          //SİLMEK
+        Route::delete('/{id}', [CategoryController::class, 'deleteCategory'])->name('deleteCategory');          //Silmek
         Route::get('/listDeleted', [CategoryController::class, 'listDeleted'])->name('listDeleted');            //SİLİNENLER
     });
 

@@ -35,7 +35,8 @@ class CategoryController extends Controller{
         $category = \App\Models\Category::findOrFail($id);
         return view('category.editCategory', compact('category'));
     }
-    public function updateCategory(UpdateCategoryRequest $request, $id){
+    public function updateCategory(UpdateCategoryRequest $request, $id)
+    {
         $category = Category::findOrFail($id);
         $category->update([
             'categoryTitle' => $request->categoryTitle,
