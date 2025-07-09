@@ -61,20 +61,14 @@ class UserController extends Controller {
         return view('user.deleteListUser', compact('user'));
     }
     
-    public function bulkDeleteUser(Request $request)
+    public function bulkDeleteUser(BulkDeleteUserRequest $request)
     {
         $ids = $request->input('user_ids', []);
         $user = User::all();
         $error = null;
         $success = null;
-        if (empty($ids)) {
-            $error = 'Lütfen silmek için en az bir kullanıcı seçin.';
-            return view('user.listUser', compact('user', 'error', 'success'));
-        }
-        if (!empty($ids)) {
-            User::whereIn('id', $ids)->delete(); // Soft delete
-            $success = 'Seçilen kullanıcılar silindi.';
-        }
+        User::whereIn('id', $ids)->delete(); 
+        $success = 'Seçilen kullanıcılar silindi.';
         $user = User::all(); // Silme sonrası güncel liste
         return view('user.listUser', compact('user', 'error', 'success'));
     }
