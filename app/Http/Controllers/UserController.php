@@ -39,7 +39,7 @@ class UserController extends Controller {
         }
         return back()->withErrors(['password' => 'Şifre yanlış!']);
     }
-
+    //edit
     public function editUser($id){
         $user = \App\Models\User::findOrFail($id);
         return view('user.editUser',compact('user'));
