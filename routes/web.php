@@ -34,7 +34,7 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/{id}/edit',[UserController::class, 'updateUser'])->name('updateUser');                    //Yeni Düzen Verisi
         Route::get('/editVerify/{id}', [UserController::class, 'editVerify'])->name('editVerify');              //Admin Onayı
         Route::post('/postEditVerify/{id}', [UserController::class, 'postEditVerify'])->name('postEditVerify'); //Admin Onaylandı Verisi
-        Route::get('/deleteListUser', [UserController::class, 'deleteListUser'])->name('deleteListUser');       //SİLİNENLER
+        Route::get('/deleteListUser', [UserController::class, 'deleteListUser'])->name('deleteListUser');       //Silinenler
         Route::post('/bulk-delete', [UserController::class, 'bulkDeleteUser'])->name('bulkDeleteUser');         //Silmek
     });
 
