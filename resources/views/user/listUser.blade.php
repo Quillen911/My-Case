@@ -357,7 +357,6 @@
         @if(isset($success) && $success)
             <div class="message success">✅ {{ $success }}</div>
         @endif
-
         <form action="{{ route('bulkDeleteUser') }}" method="POST" id="checkboxDelete">
             @csrf
             <div class="table-container">

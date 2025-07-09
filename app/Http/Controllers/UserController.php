@@ -22,7 +22,7 @@ class UserController extends Controller {
         ]);
         return view('user.addUser', ['success' => 'Kullanıcı başarıyla eklendi.']);
     }
-
+    //Liste
     public function listUser(){
         $user=User::all();
         return view('user.listUser', compact('user'));
