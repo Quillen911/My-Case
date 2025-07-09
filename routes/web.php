@@ -54,7 +54,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/add',[ProductController::class,'add'])->name('product.add');                               //Ekle
         Route::post('/addpost',[ProductController::class,'addpost'])->name('product.addpost');                  //EKLE için veri gönder
         Route::get('/list', [ProductController::class, 'listProduct'])->name('list');                           //Liste                                                     //LİSTE
-        Route::delete('/{id}', [ProductController::class, 'deleteProduct'])->name('deleteProduct');             //SİL
+        Route::delete('/{id}', [ProductController::class, 'deleteProduct'])->name('deleteProduct');             //Sil
         Route::get('/{id}/edit', [ProductController::class, 'editProduct'])->name('editProduct');               //Düzenle
         Route::post('/{id}/edit', [ProductController::class, 'updateProduct'])->name('updateProduct');          //Yeni Düzen Verisi    
         Route::get('/productListDeleted', [ProductController::class, 'productListDeleted'])->name('productListDeleted');//SİLİNENLER

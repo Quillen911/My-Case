@@ -40,7 +40,8 @@ class ProductController extends Controller
         $product->delete();
         return redirect()->route('list');
     }
-    public function editProduct($id){
+    public function editProduct($id)
+    {
         $product = \App\Models\Product::findOrFail($id);
         return view('product.editProduct', compact('product'));
     }
