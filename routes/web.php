@@ -51,7 +51,7 @@ Route::middleware(['auth'])->group(function(){
 
     //PRODUCT
     Route::prefix('product')->group(function () {
-        Route::get('/add',[ProductController::class,'add'])->name('product.add');                               //EKLE
+        Route::get('/add',[ProductController::class,'add'])->name('product.add');                               //Ekle
         Route::post('/addpost',[ProductController::class,'addpost'])->name('product.addpost');                  //EKLE için veri gönder
         Route::get('/list', [ProductController::class, 'listProduct'])->name('list');                           //Liste                                                     //LİSTE
         Route::delete('/{id}', [ProductController::class, 'deleteProduct'])->name('deleteProduct');             //SİL
