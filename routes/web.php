@@ -38,7 +38,7 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/bulk-delete', [UserController::class, 'bulkDeleteUser'])->name('bulkDeleteUser');         //Silmek
     });
 
-    //CATEGORY
+    //CATEGORY 
     Route::prefix('category')->group(function () {
         Route::get('/add', [CategoryController::class, 'addCategory'])->name('add');                            //Ekle
         Route::post('/add', [CategoryController::class, 'showCategory'])->name('add.show');                     //EKLE için veri gönder
