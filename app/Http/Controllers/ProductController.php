@@ -45,7 +45,8 @@ class ProductController extends Controller
         $product = \App\Models\Product::findOrFail($id);
         return view('product.editProduct', compact('product'));
     }
-    public function updateProduct(UpdateProductRequest $request, $id){
+    public function updateProduct(UpdateProductRequest $request, $id)
+    {
         $product =Product::findOrFail($id);
         $product->update([
             'productTitle' => $request->productTitle,
@@ -58,7 +59,8 @@ class ProductController extends Controller
             'success' => 'Ürün başarıyla güncellendi.'
         ]);
     }
-    public function productListDeleted(){
+    public function productListDeleted()
+    {
         $categories = Category::all();
         $product= \App\Models\Product::onlyTrashed()->get();
         return view('product.productListDeleted', compact('product','categories'));

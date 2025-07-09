@@ -13,6 +13,7 @@
             background-color: #f0f2f5;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+        
         .container{
             max-width: 600px;
             margin: 40px auto 0 auto;

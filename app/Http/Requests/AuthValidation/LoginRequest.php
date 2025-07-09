@@ -27,4 +27,4 @@ class LoginRequest extends FormRequest
             'password.required' => 'Şifre zorunludur.',
         ];
     }
-} 
+}
