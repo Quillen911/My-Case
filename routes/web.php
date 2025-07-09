@@ -27,7 +27,7 @@ Route::middleware(['auth'])->group(function(){
 
     // USER
     Route::prefix('user')->group(function() {
-        Route::get('/add',[UserController::class, 'addUser'])->name('addUser');                                 //EKLE
+        Route::get('/add',[UserController::class, 'addUser'])->name('addUser');                                 //Ekle
         Route::post('/postUser',[UserController::class, 'postUser'])->name('user.postUser');                    //EKLE için veri gönder
         Route::get('/list',[UserController::class,'listUser'])->name('listUser');                               //Liste
         Route::get('/{id}/edit',[UserController::class, 'editUser'])->name('editUser');                         //Düzenle
