@@ -9,16 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, SoftDeletes;
 
     protected $table = 'product';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'productTitle',
         'productCategoryId',

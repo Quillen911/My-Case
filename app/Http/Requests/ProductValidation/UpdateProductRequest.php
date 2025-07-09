@@ -9,7 +9,8 @@ class UpdateProductRequest extends FormRequest{
     public function authorize(): bool{
         return true;
     }
-    public function rules(): array{
+    public function rules(): array
+    {
         $id = $this->route('id');
         return [
             'productTitle' => 'required',
@@ -18,7 +19,8 @@ class UpdateProductRequest extends FormRequest{
             'productStatus' => 'required', 
         ];
     }     
-    public function messages(): array{
+    public function messages(): array
+    {
         return[
             'productTitle.required' => 'Ürün adı zorunludur.',
             'productBarcode.required' => 'Ürün barkodu zorunludur.',

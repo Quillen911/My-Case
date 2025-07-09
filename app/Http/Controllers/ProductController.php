@@ -8,12 +8,14 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
 
-class ProductController extends Controller{
+class ProductController extends Controller
+{
     public function add(){
         $categories= Category::all();
         return view('product.add', compact('categories'));
     }
-    public function addpost(ShowProductRequest $request){
+    public function addpost(ShowProductRequest $request)
+    {
         Product::create([
             'productTitle' => $request->productTitle,
             'productCategoryId' => $request->productCategoryId,
@@ -26,12 +28,14 @@ class ProductController extends Controller{
             'success' => 'Ürün başarıyla eklendi.'
         ]);
     }
-    public function listProduct(){
+    public function listProduct()
+    {
         $product = Product::all();
         $categories = Category::all();
         return view('product.list', compact('product', 'categories'));
     }
-    public function deleteProduct($id){
+    public function deleteProduct($id)
+    {
         $product = \App\Models\Product::findOrFail($id);
         $product->delete();
         return redirect()->route('list');
