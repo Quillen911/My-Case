@@ -31,7 +31,7 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/postUser',[UserController::class, 'postUser'])->name('user.postUser');                    //EKLE için veri gönder
         Route::get('/list',[UserController::class,'listUser'])->name('listUser');                               //Liste
         Route::get('/{id}/edit',[UserController::class, 'editUser'])->name('editUser');                         //Düzenle
-        Route::post('/{id}/edit',[UserController::class, 'updateUser'])->name('updateUser');                    //Yeni Düzen Verisi
+        Route::post('/{id}/edit',[UserController::class, 'updateUser'])->name('updateUser');                    //Yeni Düzen Verisi Gönderildi
         Route::get('/editVerify/{id}', [UserController::class, 'editVerify'])->name('editVerify');              //Admin Onayı
         Route::post('/postEditVerify/{id}', [UserController::class, 'postEditVerify'])->name('postEditVerify'); //Admin Onaylandı Verisi
         Route::get('/deleteListUser', [UserController::class, 'deleteListUser'])->name('deleteListUser');       //SİLİNENLER
