@@ -5,7 +5,7 @@ use App\Http\Requests\AuthValidation\PostSettingsRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Requests\AuthValidation\LoginRequest;
 
 class AuthController extends Controller{
     
@@ -13,20 +13,14 @@ class AuthController extends Controller{
         return view('auth.login'); 
     }
 
-    public function login(Request $request){
+    public function login(LoginRequest $request){
         $info = $request->only('email','password'); //veri aldı
-
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-        
         if(\Auth::attempt($info)){
             return redirect()->route('main'); //doğruysa giriş
         }
         return view('auth.login', ['error' => 'Email veya şifre yanlış']);
     }
-
+    //yorum
     public function getSettings(Request $request){
         $user = \Auth::user();
         return view('auth.settings', [

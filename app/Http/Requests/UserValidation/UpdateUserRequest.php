@@ -24,6 +24,7 @@ class UpdateUserRequest extends FormRequest{
             'email' => 'required|email|unique:users,email,' . $id,
         ];
     }
+    //message
     public function messages(): array
     {
         return [
