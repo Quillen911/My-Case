@@ -12,9 +12,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable,SoftDeletes;
-
+    //Yorum
     protected $fillable = [
-        'username',
+        'username', 
         'email',
         'password',
     ];

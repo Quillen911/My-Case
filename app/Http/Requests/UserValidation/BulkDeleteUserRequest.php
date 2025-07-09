@@ -18,7 +18,7 @@ class BulkDeleteUserRequest extends FormRequest
             'user_ids.*' => 'integer|exists:users,id',
         ];
     }
-
+    //message
     public function messages(): array
     {
         return [

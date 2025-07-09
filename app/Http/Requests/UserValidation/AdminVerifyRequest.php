@@ -15,7 +15,7 @@ class AdminVerifyRequest extends FormRequest{
             'password' => 'required',
         ];
     } 
-    public function messages(): array
+    public function messages(): array //mesaj
     {
         return [
             'password.required' => 'Şifre alanı boş bırakılamaz.',
