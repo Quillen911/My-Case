@@ -26,12 +26,14 @@ class ProductController extends Controller{
             'success' => 'Ürün başarıyla eklendi.'
         ]);
     }
-    public function listProduct(){
+    public function listProduct()
+    {
         $product = Product::all();
         $categories = Category::all();
         return view('product.list', compact('product', 'categories'));
     }
-    public function deleteProduct($id){
+    public function deleteProduct($id)
+    {
         $product = \App\Models\Product::findOrFail($id);
         $product->delete();
         return redirect()->route('list');
@@ -40,7 +42,8 @@ class ProductController extends Controller{
         $product = \App\Models\Product::findOrFail($id);
         return view('product.editProduct', compact('product'));
     }
-    public function updateProduct(UpdateProductRequest $request, $id){
+    public function updateProduct(UpdateProductRequest $request, $id)
+    {
         $product =Product::findOrFail($id);
         $product->update([
             'productTitle' => $request->productTitle,
@@ -53,7 +56,8 @@ class ProductController extends Controller{
             'success' => 'Ürün başarıyla güncellendi.'
         ]);
     }
-    public function productListDeleted(){
+    public function productListDeleted()
+    {
         $categories = Category::all();
         $product= \App\Models\Product::onlyTrashed()->get();
         return view('product.productListDeleted', compact('product','categories'));
