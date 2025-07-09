@@ -16,7 +16,7 @@ class UpdateCategoryRequest extends FormRequest{
             'categoryDesc' => 'required',
             'categoryStatus' => 'required',
         ];
-    }
+    }//message
     public function messages(): array{
         return[
             'categoryTitle.required' => 'Kategori adı zorunludur.',
