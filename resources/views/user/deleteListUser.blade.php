@@ -417,7 +417,6 @@
                 </div>
             </div>
         </div>
-
         <div class="table-container">
             @if(count($user) > 0)
                 <div class="table-wrapper">

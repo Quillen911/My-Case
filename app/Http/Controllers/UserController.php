@@ -10,11 +10,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller {
-    public function addUser(){
+    public function addUser()
+    {
         return view('user.addUser');
     }
 
-    public function postUser(ShowUserRequest $request){
+    public function postUser(ShowUserRequest $request)
+    {
         User::create([
             'username' => $request->username,
             'email' => $request->email,
@@ -23,16 +25,19 @@ class UserController extends Controller {
         return view('user.addUser', ['success' => 'Kullanıcı başarıyla eklendi.']);
     }
 
-    public function listUser(){
+    public function listUser()
+    {
         $user=User::all();
         return view('user.listUser', compact('user'));
     }
 
-    public function editVerify($id){
+    public function editVerify($id)
+    {
         return view('user.editVerify', ['id' => $id]);
     }
 
-    public function postEditVerify(AdminVerifyRequest $request, $id){
+    public function postEditVerify(AdminVerifyRequest $request, $id)
+    {
         $user = Auth::user();
         if (Hash::check($request->password, $user->password)) {
             return redirect()->route('editUser', ['id' => $id]);
@@ -44,7 +49,8 @@ class UserController extends Controller {
         $user = \App\Models\User::findOrFail($id);
         return view('user.editUser',compact('user'));
     }
-    public function updateUser(UpdateUserRequest $request, $id){
+    public function updateUser(UpdateUserRequest $request, $id)
+    {
         $user = User::findOrFail($id);
         $user->update([
             'username' => $request->username,
@@ -56,11 +62,12 @@ class UserController extends Controller {
         ]);
     }
 
-    public function deleteListUser(){
+    public function deleteListUser()
+    {
         $user = \App\Models\User::onlyTrashed()->get();
         return view('user.deleteListUser', compact('user'));
     }
-    
+
     public function bulkDeleteUser(BulkDeleteUserRequest $request)
     {
         $ids = $request->input('user_ids', []);
@@ -69,7 +76,7 @@ class UserController extends Controller {
         $success = null;
         User::whereIn('id', $ids)->delete(); 
         $success = 'Seçilen kullanıcılar silindi.';
-        $user = User::all(); // Silme sonrası güncel liste
+        $user = User::all();
         return view('user.listUser', compact('user', 'error', 'success'));
     }
 }
