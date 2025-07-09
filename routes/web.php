@@ -40,7 +40,7 @@ Route::middleware(['auth'])->group(function(){
 
     //CATEGORY
     Route::prefix('category')->group(function () {
-        Route::get('/add', [CategoryController::class, 'addCategory'])->name('add');                            //EKLE
+        Route::get('/add', [CategoryController::class, 'addCategory'])->name('add');                            //Ekle
         Route::post('/add', [CategoryController::class, 'showCategory'])->name('add.show');                     //EKLE için veri gönder
         Route::get('/list', [CategoryController::class, 'listCategory'] )->name('category.list');               //Liste                                                               //Liste
         Route::get('/{id}/edit', [CategoryController::class, 'editCategory'])->name('editCategory');            //Düzenle

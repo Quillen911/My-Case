@@ -9,7 +9,8 @@ class UpdateCategoryRequest extends FormRequest{
     public function authorize(): bool{
         return true;
     }
-    public function rules(): array{
+    public function rules(): array
+    {
         $id = $this->route('id');
         return[
             'categoryTitle' => 'required|unique:category,categoryTitle,' . $id,
@@ -17,7 +18,8 @@ class UpdateCategoryRequest extends FormRequest{
             'categoryStatus' => 'required',
         ];
     }
-    public function messages(): array{
+    public function messages(): array
+    {
         return[
             'categoryTitle.required' => 'Kategori adı zorunludur.',
             'categoryTitle.unique' => 'Bu kategori adı zaten kullanılıyor.',
