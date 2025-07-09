@@ -23,7 +23,8 @@ class CategoryController extends Controller{
             'old' => []
         ]);
     }
-    public function listCategory(){
+    public function listCategory()
+    {
         $category = Category::all();
         return view('category.listCategory', compact('category'));
     }

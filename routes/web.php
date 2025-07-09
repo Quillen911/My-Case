@@ -38,13 +38,13 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/bulk-delete', [UserController::class, 'bulkDeleteUser'])->name('bulkDeleteUser');         //Silmek
     });
 
-    //CATEGORY
+    //CATEGORY 
     Route::prefix('category')->group(function () {
         Route::get('/add', [CategoryController::class, 'addCategory'])->name('add');                            //EKLE
         Route::post('/add', [CategoryController::class, 'showCategory'])->name('add.show');                     //EKLE için veri gönder
         Route::get('/list', [CategoryController::class, 'listCategory'] )->name('category.list');               //Liste                                                               //Liste
         Route::get('/{id}/edit', [CategoryController::class, 'editCategory'])->name('editCategory');            //Düzenle
-        Route::post('/{id}/edit', [CategoryController::class, 'updateCategory'])->name('updateCategory');       //Yeni Düzen Verisi
+        Route::post('/{id}/edit', [CategoryController::class, 'updateCategory'])->name('updateCategory');       //Yeni Düzen Verisi 
         Route::delete('/{id}', [CategoryController::class, 'deleteCategory'])->name('deleteCategory');          //SİLMEK
         Route::get('/listDeleted', [CategoryController::class, 'listDeleted'])->name('listDeleted');            //SİLİNENLER
     });
