@@ -5,22 +5,27 @@ namespace App\Http\Requests\CategoryValidation;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Controllers\CategoryController;
 
-class UpdateCategoryRequest extends FormRequest{
-    public function authorize(): bool{
+class UpdateCategoryRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
         return true;
     }
+
     public function rules(): array
     {
         $id = $this->route('id');
-        return[
+        return [
             'categoryTitle' => 'required|unique:category,categoryTitle,' . $id,
             'categoryDesc' => 'required',
             'categoryStatus' => 'required',
         ];
     }
+
+    //message
     public function messages(): array
     {
-        return[
+        return [
             'categoryTitle.required' => 'Kategori adı zorunludur.',
             'categoryTitle.unique' => 'Bu kategori adı zaten kullanılıyor.',
             'categoryDesc.required' => 'Kategori açıklaması zorunludur.',
