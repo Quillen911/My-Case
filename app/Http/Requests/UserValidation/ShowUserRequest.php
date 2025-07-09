@@ -3,6 +3,7 @@
 namespace App\Http\Requests\UserValidation;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\UserController;
 
 class ShowUserRequest extends FormRequest{
@@ -15,13 +16,23 @@ class ShowUserRequest extends FormRequest{
     {
         $id = $this->route('id');
         return[
-            'username' =>[
+            'username' =>
+            [
+
                 'required',
                 'alpha_num',
                 'regex:/^\S+$/',
-                'unique:users,username,' . $id,
+                Rule::unique('users', 'username')->ignore($id),
+
             ],
-            'email' => 'required|email|unique:users,email,' .$id,
+            'email' => 
+            [
+
+                'required',
+                'email', 
+                Rule::unique('users', 'email')->ignore($id)
+
+            ],
         ];    
     }
     //message

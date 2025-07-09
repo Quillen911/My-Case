@@ -14,13 +14,23 @@ class UpdateUserRequest extends FormRequest{
     {
         $id = $this->route('id'); 
         return[
-            'username' =>[
+            'username' =>
+            [
+                
                 'required',
                 'alpha_num',
                 'regex:/^\S+$/',
-                'unique:users,username,' . $id,
+               $id ?  'unique:users,username,' . $id : 'unique:users,username',
+
             ],
-            'email' => 'required|email|unique:users,email,' . $id,
+            'email' => 
+            [
+
+                'required',
+                'email',
+                $id ? 'unique:users,email,' . $id : 'unique:users,email',
+
+            ],
         ];
     }
     //message

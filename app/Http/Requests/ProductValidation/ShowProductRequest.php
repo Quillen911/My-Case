@@ -3,7 +3,7 @@
 namespace App\Http\Requests\ProductValidation;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Http\Controllers\ProductController;
+use Illuminate\Validation\Rule;
 
 class ShowProductRequest extends FormRequest{
     public function authorize(): bool{
@@ -16,7 +16,10 @@ class ShowProductRequest extends FormRequest{
             'productTitle' => 'required',
             'productCategoryId' => 'nullable',
             'productStatus' => 'required',
-            'productBarcode' => 'required|unique:product,productBarcode',
+            'productBarcode' => [
+                'required',
+                Rule::unique('product', 'productBarcode')->ignore($id),
+            ],
         ];
     }
     public function messages(): array

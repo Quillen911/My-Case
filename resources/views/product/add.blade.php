@@ -297,7 +297,7 @@
             </div>
             
             <div class="form-group @error('productCategoryId') has-error @enderror">
-                <select name="productCategoryId" required>
+                <select name="productCategoryId">
                     <option value="">🏷️ Kategori Seçiniz</option>
                     @foreach($categories as $c)
                         <option value="{{$c->id}}" {{ old('productCategoryId') == $c->id ? 'selected' : '' }}>{{$c->categoryTitle}}</option>

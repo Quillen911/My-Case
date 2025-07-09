@@ -12,7 +12,7 @@ use App\Models\User;
 
 //LOGIN
 
-Route::get('/login', [AuthController::class,'showLogin'])->name('login.form');                                  //Giriş                      
+Route::get('', [AuthController::class,'showLogin'])->name('login.form');                                        //Giriş                      
 Route::post('/login', [AuthController::class,'login'])->name('login');                                          //Giriş Onayı
 
 Route::middleware(['auth'])->group(function(){

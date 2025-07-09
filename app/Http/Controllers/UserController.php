@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserValidation\ShowUserRequest;
 use App\Http\Requests\UserValidation\UpdateUserRequest;
 use App\Http\Requests\UserValidation\AdminVerifyRequest;
+use App\Http\Requests\UserValidation\BulkDeleteUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

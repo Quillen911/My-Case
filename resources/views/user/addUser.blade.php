@@ -243,7 +243,6 @@
 <body>
     <div class="form-container">
         <h1>👤 Yeni Kullanıcı Ekle</h1>
-        //hata mesajı
         @if(isset($error))
             <div class="message error">{{ $error }}</div>
         @endif

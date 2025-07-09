@@ -3,7 +3,7 @@
 namespace App\Http\Requests\CategoryValidation;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Http\Controllers\CategoryController;
+use Illuminate\Validation\Rule;
 
 class UpdateCategoryRequest extends FormRequest
 {
@@ -16,7 +16,10 @@ class UpdateCategoryRequest extends FormRequest
     {
         $id = $this->route('id');
         return [
-            'categoryTitle' => 'required|unique:category,categoryTitle,' . $id,
+            'categoryTitle' => [
+                'required',
+                Rule::unique('category', 'categoryTitle')->ignore($id),
+            ],
             'categoryDesc' => 'required',
             'categoryStatus' => 'required',
         ];
