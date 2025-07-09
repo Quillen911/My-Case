@@ -9,10 +9,12 @@ use App\Models\Category;
 use App\Models\Product;
 
 class CategoryController extends Controller{
-    public function addCategory(){
+    public function addCategory()
+    {
         return view('category.addCategory');
     }
-    public function showCategory(ShowCategoryRequest $request){
+    public function showCategory(ShowCategoryRequest $request)
+    {
         Category::create([
             'categoryTitle' => $request->categoryTitle,
             'categoryDesc' => $request->categoryDesc,
@@ -23,11 +25,13 @@ class CategoryController extends Controller{
             'old' => []
         ]);
     }
-    public function listCategory(){
+    public function listCategory()
+    {
         $category = Category::all();
         return view('category.listCategory', compact('category'));
     }
-    public function editCategory($id){
+    public function editCategory($id)
+    {
         $category = \App\Models\Category::findOrFail($id);
         return view('category.editCategory', compact('category'));
     }
