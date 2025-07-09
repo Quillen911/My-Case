@@ -31,6 +31,11 @@ class UpdateUserRequest extends FormRequest{
                 $id ? 'unique:users,email,' . $id : 'unique:users,email',
 
             ],
+            'password' => [
+                'nullable',
+                'min:6',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/',
+            ],
         ];
     }
     //message
@@ -44,6 +49,8 @@ class UpdateUserRequest extends FormRequest{
             'email.email' => 'Geçerli bir e-posta adresi giriniz.',
             'username.required' => 'Kullanıcı adı zorunludur.',
             'email.required' => 'E-posta zorunludur.',
+            'password.min' => 'Şifre en az 6 karakter olmalıdır.',
+            'password.regex' => 'Şifre en az bir büyük harf, bir küçük harf ve bir rakam içermelidir.',
         ];
     }
 }    

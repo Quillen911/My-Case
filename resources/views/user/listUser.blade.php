@@ -321,6 +321,18 @@
             font-weight: 600;
             font-size: 12px;
         }
+        .custom-alert {
+            display: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 20px 40px;
+            font-weight: 500;
+            text-align: center;
+            background-color: #ffebee;
+            color: #c62828;
+            border-left: 4px solid #e53935;
+            animation: slideIn 0.5s ease-out;
+        }
     </style>
     <script>
         function showCheckboxes(checkboxClass, showBtnId, deleteBtnId, cancelBtnId) {
@@ -331,6 +343,7 @@
             document.getElementById(showBtnId).style.display = 'none';
             if(deleteBtnId) document.getElementById(deleteBtnId).style.display = 'inline';
             if(cancelBtnId) document.getElementById(cancelBtnId).style.display = 'inline';
+            hideCustomAlert();
         }
         function hideCheckboxes(checkboxClass, showBtnId, deleteBtnId, cancelBtnId) {
             var checkboxes = document.getElementsByClassName(checkboxClass);
@@ -341,7 +354,38 @@
             document.getElementById(showBtnId).style.display = 'inline';
             if(deleteBtnId) document.getElementById(deleteBtnId).style.display = 'none';
             if(cancelBtnId) document.getElementById(cancelBtnId).style.display = 'none';
+            hideCustomAlert();
         }
+        function hideCustomAlert() {
+            var alertDiv = document.getElementById('custom-alert');
+            if(alertDiv) alertDiv.style.display = 'none';
+        }
+        function checkAndConfirmDelete() {
+            var checkboxes = document.getElementsByClassName('note-checkbox');
+            var atLeastOneChecked = false;
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked && checkboxes[i].style.display !== 'none') {
+                    atLeastOneChecked = true;
+                    break;
+                }
+            }
+            if (!atLeastOneChecked) {
+                var alertDiv = document.getElementById('custom-alert');
+                if(alertDiv) {
+                    alertDiv.innerText = 'Lütfen silmek için en az bir kullanıcı seçin.';
+                    alertDiv.style.display = 'block';
+                }
+                return false;
+            }
+            hideCustomAlert();
+            return confirm('Silmek istediğinize emin misiniz?');
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            var checkboxes = document.getElementsByClassName('note-checkbox');
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].addEventListener('change', hideCustomAlert);
+            }
+        });
     </script>
 </head>
 <body>
@@ -357,6 +401,7 @@
         @if(isset($success) && $success)
             <div class="message success">✅ {{ $success }}</div>
         @endif
+        <div id="custom-alert" class="custom-alert"></div>
         <form action="{{ route('bulkDeleteUser') }}" method="POST" id="checkboxDelete">
             @csrf
             <div class="table-container">
@@ -390,7 +435,7 @@
 
             <div class="action-buttons">
                 <button id="show-checkbox-btn" type="button" class="btn-danger" onclick="showCheckboxes('note-checkbox', 'show-checkbox-btn', 'delete-selected-btn', 'action-back-btn');">🗑️ Sil</button>
-                <button id="delete-selected-btn" type="submit" class="btn-success" style="display:none;">✅ Seçilenleri Sil</button>
+                <button id="delete-selected-btn" type="submit" class="btn-success" style="display:none;" onclick="return checkAndConfirmDelete();">✅ Seçilenleri Sil</button>
                 <button id="action-back-btn" type="button" class="btn-secondary" style="display:none" onclick="hideCheckboxes('note-checkbox', 'show-checkbox-btn', 'delete-selected-btn', 'action-back-btn');">❌ Vazgeç</button>
             </div>
         </form>

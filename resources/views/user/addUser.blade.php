@@ -90,6 +90,16 @@
             border-left: 4px solid #4caf50;
         }
 
+        .field-error {
+            background-color: #ffebee;
+            color: #c62828;
+            border-left: 4px solid #e53935;
+            padding: 8px 12px;
+            margin-top: 5px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
         @keyframes slideIn {
             from {
                 opacity: 0;
@@ -119,6 +129,11 @@
             outline: none;
         }
 
+        input.error-input {
+            border-color: #e53935;
+            background-color: #ffebee;
+        }
+
         input[type="text"]:focus,
         input[type="email"]:focus,
         input[type="password"]:focus {
@@ -126,6 +141,11 @@
             background-color: white;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
             transform: translateY(-2px);
+        }
+
+        input.error-input:focus {
+            border-color: #e53935;
+            box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.1);
         }
 
         input[type="text"]::placeholder,
@@ -243,6 +263,7 @@
 <body>
     <div class="form-container">
         <h1>👤 Yeni Kullanıcı Ekle</h1>
+        
         @if(isset($error))
             <div class="message error">{{ $error }}</div>
         @endif
@@ -254,15 +275,35 @@
         <form action="{{route('user.postUser')}}" method="POST">
             @csrf
             <div class="form-group">
-                <input type="text" name="username" placeholder='👤 Kullanıcı Adı' required value="{{ old('username', $old['username'] ?? '') }}">
+                <input type="text" 
+                       name="username" 
+                       placeholder='👤 Kullanıcı Adı' 
+                       value="{{ old('username') }}"
+                       class="{{ $errors->has('username') ? 'error-input' : '' }}">
+                @if($errors->has('username'))
+                    <div class="field-error">{{ $errors->first('username') }}</div>
+                @endif
             </div>
             
             <div class="form-group">
-                <input type="email" name="email" placeholder='📧 Kullanıcı Email' required value="{{ old('email', $old['email'] ?? '') }}">
+                <input type="email" 
+                       name="email" 
+                       placeholder='📧 Kullanıcı Email' 
+                       value="{{ old('email') }}"
+                       class="{{ $errors->has('email') ? 'error-input' : '' }}">
+                @if($errors->has('email'))
+                    <div class="field-error">{{ $errors->first('email') }}</div>
+                @endif
             </div>
             
             <div class="form-group">
-                <input type="password" name="password" placeholder='🔒 Kullanıcı Şifre' required>
+                <input type="password" 
+                       name="password" 
+                       placeholder='🔒 Kullanıcı Şifre'
+                       class="{{ $errors->has('password') ? 'error-input' : '' }}">
+                @if($errors->has('password'))
+                    <div class="field-error">{{ $errors->first('password') }}</div>
+                @endif
             </div>
             
             <div class="button-group">
