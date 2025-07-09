@@ -23,7 +23,8 @@ class CategoryController extends Controller{
             'old' => []
         ]);
     }
-    public function listCategory(){
+    public function listCategory()
+    {
         $category = Category::all();
         return view('category.listCategory', compact('category'));
     }
@@ -31,7 +32,8 @@ class CategoryController extends Controller{
         $category = \App\Models\Category::findOrFail($id);
         return view('category.editCategory', compact('category'));
     }
-    public function updateCategory(UpdateCategoryRequest $request, $id){
+    public function updateCategory(UpdateCategoryRequest $request, $id)
+    {
         $category = Category::findOrFail($id);
         $category->update([
             'categoryTitle' => $request->categoryTitle,
