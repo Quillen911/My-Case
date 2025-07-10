@@ -370,14 +370,8 @@
                         <tr>
                             <td><span class="id-badge">#{{ $p->id }}</span></td>
                             <td class="product-title">{{ $p->productTitle }}</td>
+                            <td><span class="category-badge">{{ $p->category->categoryTitle ?? 'Kategori Yok'}}</span></td>
                             <td><span class="category-badge">{{ $p->productCategoryId }}</span></td>
-                            <td>
-                                @foreach($categories as $c)
-                                    @if($c->id == $p->productCategoryId)
-                                        {{ $c->categoryTitle }}
-                                    @endif    
-                                @endforeach
-                            </td>
                             <td><span class="barcode">{{ $p->productBarcode }}</span></td>
                             <td><span class="status-badge">{{ $p->productStatus }}</span></td>
                             <td>

@@ -19,4 +19,7 @@ class Product extends Model
         'productBarcode',
         'productStatus',
     ];
+    public function category(){
+        return $this->belongsTo(Category::class, 'productCategoryId');
+    }
 }

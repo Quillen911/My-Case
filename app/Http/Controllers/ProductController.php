@@ -30,9 +30,8 @@ class ProductController extends Controller
     }
     public function listProduct()
     {
-        $product = Product::all();
-        $categories = Category::all();
-        return view('product.list', compact('product', 'categories'));
+        $product = Product::with('category')->get();
+        return view('product.list', compact('product'));
     }
     public function deleteProduct($id)
     {

@@ -18,4 +18,7 @@ class Category extends Model
         'categoryDesc',
         'categoryStatus',
     ];
+    public function product(){
+        return $this->hasOne(Category::class, 'categoryTitle');
+    }
 }

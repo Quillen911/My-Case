@@ -11,10 +11,12 @@ return new class extends Migration
         Schema::create('product', function (Blueprint $table) {
             $table->id();
             $table->string('productTitle');
-            $table->integer('productCategoryId')->nullable();
+            $table->unsignedBigInteger('productCategoryId')->nullable();
             $table->string('productBarcode');
             $table->string('productStatus');
             $table->timestamps();
+
+            $table->foreign('productCategoryId')->references('id')->on('category')->onDelete('set null');
         });
     }
     public function down(): void
