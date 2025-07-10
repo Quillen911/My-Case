@@ -19,6 +19,6 @@ class Category extends Model
         'categoryStatus',
     ];
     public function product(){
-        return $this->hasOne(Category::class, 'categoryTitle');
+        return $this->hasMany(Product::class, 'productCategoryId');
     }
 }

@@ -146,10 +146,17 @@
                             <a href="{{ route('editCategory', $c->id) }}">✏️ Düzenle</a>
                         </td>
                         <td>
-                            <form action="{{ route('deleteCategory', $c->id) }}" method="POST" onsubmit="return confirm('Silmek istediğinize emin misiniz?')">
+                            @php
+                                $urunMesaj = $c->product_count > 0
+                                    ? "Bu Kategorinin {$c->product_count} adet ürünü var. Silmek istediğinize emin misiniz?"
+                                    : "Bu Kategorinin hiç ürünü yok. Silmek istediğinize emin misiniz?";
+                            @endphp
+                            <form action="{{ route('deleteCategory', $c->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit">🗑️ Sil</button>
+                                <button type="submit" onclick="return confirm('{{ $urunMesaj }}')">
+                                    🗑️ Sil
+                                </button>
                             </form>
                         </td>
                     </tr>

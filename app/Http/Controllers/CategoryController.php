@@ -27,7 +27,8 @@ class CategoryController extends Controller{
     }
     public function listCategory()
     {
-        $category = Category::all();
+        $category = Category::withCount('product')->get();
+ 
         return view('category.listCategory', compact('category'));
     }
     public function editCategory($id)

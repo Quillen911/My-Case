@@ -357,8 +357,8 @@
                     <tr>
                         <th>ID</th>
                         <th>📦 Ürün Adı</th>
-                        <th>🏷️ Kategori No</th>
-                        <th>📂 Kategori</th>
+                        <th>🏷️ Kategori</th>
+                        <th>📂 Kategori No</th>
                         <th>🔢 Barkod</th>
                         <th>📋 Durumu</th>
                         <th>✏️ Düzenle</th>

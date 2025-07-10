@@ -526,7 +526,7 @@
 
         <div class="footer">
             <div class="footer-info">
-                <span class="warning-badge">⚠️ Dikkat</span>
+                <span class="warning-badge">Dikkat!</span>
                 <span>Silinmiş ürünler kalıcı olarak kaldırılmıştır</span>
             </div>
             <a href="{{ route('list') }}" class="back-button">
