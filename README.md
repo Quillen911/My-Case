@@ -8,57 +8,59 @@ Admin Girişi ile Müşteri(kullanıcı) ekleme, Kategori Ekleme ve Ürün eklem
 
 Aşağıdaki adımları izleyerek projeyi kendi bilgisayarınızda çalıştırabilirsiniz:
 
-### 1 Projeyi Klonlayın
-
+### 1. Projeyi Klonlayın
+```bash
 git clone https://github.com/Quillen911/My-Case.git
 cd My-Case
-
-### 2 Composer Bağımlılıklarını Kurun
-
+```
+### 2. Composer Bağımlılıklarını Kurun
+```bash
 composer install
-
-## 3Ortam Değişkenleri Dosyasını Oluşturun
-
+```
+## 3. Ortam Değişkenleri Dosyasını Oluşturun
+```bash
 copy .env.example .env
+```
+## 4. Veritabanı Ayarlarını Yapın
 
-## 4 Veritabanı Ayarlarını Yapın
+.env dosyasına gerekli bilgiler girilmeli. Örnek:
 
-.env dosyasına gerekli bilgiler girilmeli. Örnek
-
+```env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=notlar
 DB_USERNAME=root
 DB_PASSWORD=
+```
 
-
-## 5 Veritabanını Kurun
+## 5. Veritabanını Kurun
 Migration'ları çalıştırarak tablolar oluşturulmalı
-
+```bash
 php artisan migrate
-
-## 6 (Opsiyonel) Seeder Dosyalarını Çalıştırın
+```
+## 6. (Opsiyonel) Seeder Dosyalarını Çalıştırın
 Örnek verileri veritabanına eklemek isterseniz:
-
+```bash
 php artisan db:seed
-
-## 8 Laravel servis sağlayıcısını başlatın
-
+```
+## 7. Laravel servis sağlayıcısını başlatın
+```bash
 php artisan serve
-
+```
 http://127.0.0.1:8000  Tarayıcıya bu adresten ulaşılır.
 
 ---
 
-##  Kullanılan Teknolojiler
+## Kullanılan Teknolojiler
 
-Laravel 12.x
-PHP 8.x
-PostgreSql
-Composer
-Blade Template Engine
-CSS, JavaScript
+- Laravel 12.x
+- PHP 8.x
+- PostgreSQL
+- Composer
+- Blade Template Engine
+- CSS
+- JavaScript
 
 ---
 
