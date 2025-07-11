@@ -49,8 +49,8 @@ Migration'ları çalıştırarak tablolar oluşturulmalı.
 ```bash
 php artisan migrate
 ```
-## 8. (Opsiyonel) Seeder Dosyalarını Çalıştırın
-Örnek verileri veritabanına eklemek isterseniz:
+## 8. Seeder Dosyalarını Çalıştırın
+Veriler veritabanına eklenmeli.
 ```bash
 php artisan db:seed
 ```
