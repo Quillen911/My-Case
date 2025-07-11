@@ -21,7 +21,17 @@ composer install
 ```bash
 copy .env.example .env
 ```
-## 4. Veritabanı Ayarlarını Yapın
+## 4. Uygulama Anahtarını Oluşturun
+```bash
+php artisan key:generate
+```
+## 5. Session driver dosyası ayarlanmalı
+
+```env
+SESSION_DRIVER=file
+```
+
+## 5. Veritabanı Ayarlarını Yapın
 
 .env dosyasına gerekli bilgiler girilmeli. Örnek:
 
@@ -34,22 +44,23 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-## 5. Veritabanını Kurun
+## 6. Veritabanını Kurun
 Migration'ları çalıştırarak tablolar oluşturulmalı.
 ```bash
 php artisan migrate
 ```
-## 6. (Opsiyonel) Seeder Dosyalarını Çalıştırın
+## 7. (Opsiyonel) Seeder Dosyalarını Çalıştırın
 Örnek verileri veritabanına eklemek isterseniz:
 ```bash
 php artisan db:seed
 ```
-## 7. Laravel servis sağlayıcısını başlatın
+## 8. Laravel servis sağlayıcısını başlatın
 ```bash
 php artisan serve
 ```
 http://127.0.0.1:8000  Tarayıcıya bu adresten ulaşılır.
-
+admin giriş bilgisi 
+database\seeders\UserSeeder.php dosyasından ulaşılabilir
 ---
 
 ## Kullanılan Teknolojiler
