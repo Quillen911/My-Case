@@ -31,7 +31,7 @@ php artisan key:generate
 SESSION_DRIVER=file
 ```
 
-## 5. Veritabanı Ayarlarını Yapın
+## 6. Veritabanı Ayarlarını Yapın
 
 .env dosyasına gerekli bilgiler girilmeli. Örnek:
 
@@ -44,17 +44,17 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-## 6. Veritabanını Kurun
+## 7. Veritabanını Kurun
 Migration'ları çalıştırarak tablolar oluşturulmalı.
 ```bash
 php artisan migrate
 ```
-## 7. (Opsiyonel) Seeder Dosyalarını Çalıştırın
+## 8. (Opsiyonel) Seeder Dosyalarını Çalıştırın
 Örnek verileri veritabanına eklemek isterseniz:
 ```bash
 php artisan db:seed
 ```
-## 8. Laravel servis sağlayıcısını başlatın
+## 9. Laravel servis sağlayıcısını başlatın
 ```bash
 php artisan serve
 ```
