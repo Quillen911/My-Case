@@ -17,10 +17,13 @@ class User extends Authenticatable
         'username', 
         'email',
         'password',
+        'is_admin',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
     ];
+
+    
 }

@@ -17,10 +17,18 @@ class AuthController extends Controller{
 
     public function login(LoginRequest $request)
     {
-        $info = $request->only('email','password'); //veri aldı
-        
-        if(\Auth::attempt($info)){
-            return redirect()->route('main'); //doğruysa giriş
+        $info = [
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+        ];
+        if (\Auth::attempt($info)) {
+            $user = \Auth::user();
+            if ($user->is_admin) {
+                return redirect()->route('main');
+            } else {
+                \Auth::logout();
+                return view('auth.login', ['error' => 'Sadece admin kullanıcılar giriş yapabilir.']);
+            }
         }
         return view('auth.login', ['error' => 'Email veya şifre yanlış']);
     }
