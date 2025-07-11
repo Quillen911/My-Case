@@ -35,7 +35,7 @@ DB_PASSWORD=
 ```
 
 ## 5. Veritabanını Kurun
-Migration'ları çalıştırarak tablolar oluşturulmalı
+Migration'ları çalıştırarak tablolar oluşturulmalı.
 ```bash
 php artisan migrate
 ```
