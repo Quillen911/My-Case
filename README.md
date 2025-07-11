@@ -26,7 +26,7 @@ copy .env.example .env
 php artisan key:generate
 ```
 ## 5. Session driver dosyası ayarlanmalı
-
+.env dosyasındaki bu alan düzeltilmeli.
 ```env
 SESSION_DRIVER=file
 ```
@@ -59,9 +59,12 @@ php artisan db:seed
 php artisan serve
 ```
 http://127.0.0.1:8000  Tarayıcıya bu adresten ulaşılır.
+---
 admin giriş bilgisi 
 database\seeders\UserSeeder.php dosyasından ulaşılabilir
 ---
+
+***
 
 ## Kullanılan Teknolojiler
 
