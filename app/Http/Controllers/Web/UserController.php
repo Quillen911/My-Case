@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
 use App\Http\Requests\UserValidation\ShowUserRequest;
 use App\Http\Requests\UserValidation\UpdateUserRequest;

@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
 use App\Http\Requests\AuthValidation\PostSettingsRequest;
 use App\Http\Requests\AuthValidation\LoginRequest;

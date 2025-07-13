@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Web\AuthController;
+use App\Http\Controllers\Web\UserController;
+use App\Http\Controllers\Web\CategoryController;
+use App\Http\Controllers\Web\ProductController;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
@@ -16,7 +16,7 @@ Route::get('/', [AuthController::class,'showLogin'])->name('login.form');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');                                       //Giriş                      
 Route::post('/login', [AuthController::class,'login'])->name('login');                                          //Giriş Onayı
 
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth:sanctum'])->group(function(){
     //LOG OUT
     Route::post('/logout',[AuthController::class, 'logout'])->name('logout');                                   //Çıkış
     //MAIN

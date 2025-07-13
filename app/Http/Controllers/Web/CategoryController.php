@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
 use App\Http\Requests\CategoryValidation\ShowCategoryRequest;
 use App\Http\Requests\CategoryValidation\UpdateCategoryRequest;
