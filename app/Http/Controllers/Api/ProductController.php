@@ -52,6 +52,7 @@ class ProductController extends Controller
         if (!$product) {
             return response()->json(['message' => 'Ürün bulunamadı'], 404);
         }
+        Product::where('productCategoryId', $id)->update(['productCategoryId' => null]);
         $product->delete();
         return response()->json(['message' => 'Ürün silindi']);
     }

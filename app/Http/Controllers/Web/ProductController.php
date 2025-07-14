@@ -11,10 +11,12 @@ use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
-    public function add(){
+    public function add()
+    {
         $categories= Category::all();
         return view('product.add', compact('categories'));
     }
+    
     public function addpost(ShowProductRequest $request)
     {
         Product::create([
@@ -29,22 +31,26 @@ class ProductController extends Controller
             'success' => 'Ürün başarıyla eklendi.'
         ]);
     }
+
     public function listProduct()
     {
         $product = Product::with('category')->get();
         return view('product.list', compact('product'));
     }
+
     public function deleteProduct($id)
     {
         $product = \App\Models\Product::findOrFail($id);
         $product->delete();
         return redirect()->route('list');
     }
+
     public function editProduct($id)
     {
         $product = \App\Models\Product::findOrFail($id);
         return view('product.editProduct', compact('product'));
     }
+
     public function updateProduct(UpdateProductRequest $request, $id)
     {
         $product =Product::findOrFail($id);
@@ -59,6 +65,7 @@ class ProductController extends Controller
             'success' => 'Ürün başarıyla güncellendi.'
         ]);
     }
+
     public function productListDeleted()
     {
         $categories = Category::all();
