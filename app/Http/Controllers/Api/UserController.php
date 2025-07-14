@@ -50,7 +50,7 @@ class UserController extends Controller
             $user->save();
         }
 
-        return response->json($user);
+        return response()->json($user);
     }
     public function destroy($id)
     {
@@ -58,7 +58,7 @@ class UserController extends Controller
         if(!$user){
             return response()->json(['message' => 'Kullanıcı bulunamadı'], 404);
         }
-        user->delete();
+        $user->delete();
         return response()->json(['message' => 'Kullanıcı silindi']);
     }
 

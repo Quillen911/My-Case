@@ -7,6 +7,7 @@ use App\Http\Requests\ProductValidation\UpdateProductRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
+use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {

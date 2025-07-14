@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryValidation\ShowCategoryRequest;
 use App\Http\Requests\CategoryValidation\UpdateCategoryRequest;
 use Illuminate\Http\Request;

@@ -16,7 +16,7 @@ Route::get('/', [AuthController::class,'showLogin'])->name('login.form');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');                                       //Giriş                      
 Route::post('/login', [AuthController::class,'login'])->name('login');                                          //Giriş Onayı
 
-Route::middleware(['auth:sanctum'])->group(function(){
+Route::middleware(['auth'])->group(function(){
     //LOG OUT
     Route::post('/logout',[AuthController::class, 'logout'])->name('logout');                                   //Çıkış
     //MAIN

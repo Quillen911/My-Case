@@ -25,6 +25,5 @@ class UserSeeder extends Seeder
             'password' => Hash::make('ismaiL0'),
             'is_admin' => true,
         ]);
-        Category::factory(10)->create();
     }
 } 

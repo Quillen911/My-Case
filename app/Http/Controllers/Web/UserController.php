@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UserValidation\ShowUserRequest;
 use App\Http\Requests\UserValidation\UpdateUserRequest;
 use App\Http\Requests\UserValidation\AdminVerifyRequest;

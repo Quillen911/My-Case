@@ -12,7 +12,7 @@ use App\Models\Product;
 class CategoryController extends Controller{
     public function index()
     {
-        return response()->json(Category::all);
+        return response()->json(Category::all());
     }
 
     public function show($id)
@@ -26,12 +26,12 @@ class CategoryController extends Controller{
 
     public function store(ShowCategoryRequest $request)
     {
-        Category::create([
+        $category = Category::create([
             'categoryTitle' => $request->categoryTitle,
             'categoryDesc' => $request->categoryDesc,
             'categoryStatus' =>$request->categoryStatus,
         ]);
-        return response()->json($user,201);
+        return response()->json($category,201);
     }
 
     public function update(UpdateCategoryRequest $request, $id)
@@ -40,7 +40,7 @@ class CategoryController extends Controller{
         if(!$category){
             return response()->json(['message' => 'Kategori bulunamadı'],404);
         }
-        $user->update($request->only(['categoryTitle', 'categoryDesc', 'categoryStatus']));
+        $category->update($request->only(['categoryTitle', 'categoryDesc', 'categoryStatus']));
         return response()->json(['message' => 'Kategori başarıyla güncellendi', 'category' => $category]);
     }
 

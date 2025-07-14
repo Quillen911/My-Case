@@ -26,7 +26,12 @@ class ProductController extends Controller
 
     public function store(ShowProductRequest $request)
     {
-        $product = Product::create($request->only(['productTitle', 'productDesc', 'productStatus']));
+        $product = Product::create([
+            'productTitle'=> $request->productTitle, 
+            'productCategoryId'=> $request->productCategoryId, 
+            'productBarcode'=> $request->productBarcode,
+            'productStatus'=> $request->productStatus
+        ]);
 
         return response()->json($product, 201);
     }
@@ -37,7 +42,7 @@ class ProductController extends Controller
         if (!$product) {
             return response()->json(['message' => 'Ürün bulunamadı'], 404);
         }
-        $product->update($request->only(['productTitle', 'productDesc', 'productStatus']));
+        $product->update($request->only(['productTitle', 'productCategoryId', 'productDesc', 'productStatus']));
         return response()->json($product);
     }
 
